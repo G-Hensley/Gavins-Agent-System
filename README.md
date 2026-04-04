@@ -15,17 +15,23 @@ Instead of scattering configuration across machines, this system is:
 ## Repository Structure
 
 ```
-skills/              # 27 reusable skills (each with SKILL.md + references/)
+skills/              # 29 reusable skills (each with SKILL.md + references/)
 agents/              # 23 specialist agents (prompts + configuration)
 commands/            # 5 slash commands (/improve, /plan, /review, /setup, /status)
 agent-memory/        # Persistent learnings per agent (loaded per session)
 improvements/        # Backlog for skill/agent enhancements
 plans/               # Saved execution plans
-plugins/             # plugins.json (20+ tracked plugins)
+config/              # Settings, plugin list, and other configuration
+  plugins/           #   plugins.json (20+ tracked plugins)
+  settings.json      #   Template permissions and configuration
+  settings.local.json #  Local overrides
+scripts/             # Tooling and automation
+  install.sh         #   Deploy script — symlinks everything to ~/.claude/
+  validate.sh        #   Validates repo structure and cross-references
+docs/                # Project documentation and roadmaps
+  IMPROVEMENTS.md    #   Consolidated improvement plan
 CLAUDE.md            # Global instructions for Claude Code sessions
-settings.json        # Template permissions and configuration
-settings.local.json  # Local overrides (portable but usually empty)
-install.sh           # Deploy script — symlinks everything to ~/.claude/
+README.md            # This file
 .gitignore           # Excludes credentials, caches, ephemeral state
 ```
 
@@ -39,9 +45,9 @@ install.sh           # Deploy script — symlinks everything to ~/.claude/
 ### Install
 
 ```bash
-git clone https://github.com/gavinhensley/claude-agent-system.git
-cd claude-agent-system
-./install.sh
+git clone https://github.com/G-Hensley/Gavins-Agent-System.git
+cd Gavins-Agent-System
+./scripts/install.sh
 ```
 
 The script will:
