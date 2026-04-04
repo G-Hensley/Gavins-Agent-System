@@ -4,7 +4,7 @@ set -euo pipefail
 # Install Gavin's Claude Code Agent System
 # Symlinks or copies skills, agents, commands, and config into ~/.claude/
 
-REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 CLAUDE_DIR="$HOME/.claude"
 
 DRY_RUN=false
@@ -103,16 +103,20 @@ if $VERIFY; then
     fi
   done
 
-  for file in CLAUDE.md settings.local.json; do
-    if [ -f "$REPO_DIR/$file" ]; then
-      check_symlink "$CLAUDE_DIR/$file" "$REPO_DIR/$file" "$file"
-    fi
-  done
+  # CLAUDE.md lives at repo root
+  if [ -f "$REPO_DIR/CLAUDE.md" ]; then
+    check_symlink "$CLAUDE_DIR/CLAUDE.md" "$REPO_DIR/CLAUDE.md" "CLAUDE.md"
+  fi
 
-  if [ -f "$REPO_DIR/plugins/installed_plugins.json" ]; then
+  # settings.local.json lives in config/
+  if [ -f "$REPO_DIR/config/settings.local.json" ]; then
+    check_symlink "$CLAUDE_DIR/settings.local.json" "$REPO_DIR/config/settings.local.json" "settings.local.json"
+  fi
+
+  if [ -f "$REPO_DIR/config/plugins/installed_plugins.json" ]; then
     check_symlink \
       "$CLAUDE_DIR/plugins/installed_plugins.json" \
-      "$REPO_DIR/plugins/installed_plugins.json" \
+      "$REPO_DIR/config/plugins/installed_plugins.json" \
       "plugins/installed_plugins.json"
   fi
 
@@ -173,19 +177,23 @@ for dir in "${DIRS[@]}"; do
 done
 
 # Config files — symlink individually
-for file in CLAUDE.md settings.local.json; do
-  if [ -f "$REPO_DIR/$file" ]; then
+# Each entry: "target_name|source_path"
+CONFIG_FILES="CLAUDE.md|$REPO_DIR/CLAUDE.md
+settings.local.json|$REPO_DIR/config/settings.local.json"
+
+echo "$CONFIG_FILES" | while IFS='|' read -r file src; do
+  if [ -f "$src" ]; then
     if $DRY_RUN; then
       if [ -f "$CLAUDE_DIR/$file" ] && [ ! -L "$CLAUDE_DIR/$file" ]; then
         echo "[DRY RUN] Backup existing file: $CLAUDE_DIR/$file -> $CLAUDE_DIR/$file.bak"
       fi
-      echo "[DRY RUN] Symlink: $CLAUDE_DIR/$file -> $REPO_DIR/$file"
+      echo "[DRY RUN] Symlink: $CLAUDE_DIR/$file -> $src"
     else
       if [ -f "$CLAUDE_DIR/$file" ] && [ ! -L "$CLAUDE_DIR/$file" ]; then
         echo "  Backing up existing $file -> $file.bak"
         mv "$CLAUDE_DIR/$file" "$CLAUDE_DIR/$file.bak"
       fi
-      ln -sf "$REPO_DIR/$file" "$CLAUDE_DIR/$file"
+      ln -sf "$src" "$CLAUDE_DIR/$file"
       echo "  Linked: $file"
     fi
   fi
@@ -194,13 +202,13 @@ done
 # Plugin config (just the list, not caches)
 if $DRY_RUN; then
   echo "[DRY RUN] mkdir -p $CLAUDE_DIR/plugins"
-  if [ -f "$REPO_DIR/plugins/installed_plugins.json" ]; then
-    echo "[DRY RUN] Symlink: $CLAUDE_DIR/plugins/installed_plugins.json -> $REPO_DIR/plugins/installed_plugins.json"
+  if [ -f "$REPO_DIR/config/plugins/installed_plugins.json" ]; then
+    echo "[DRY RUN] Symlink: $CLAUDE_DIR/plugins/installed_plugins.json -> $REPO_DIR/config/plugins/installed_plugins.json"
   fi
 else
   mkdir -p "$CLAUDE_DIR/plugins"
-  if [ -f "$REPO_DIR/plugins/installed_plugins.json" ]; then
-    ln -sf "$REPO_DIR/plugins/installed_plugins.json" "$CLAUDE_DIR/plugins/installed_plugins.json"
+  if [ -f "$REPO_DIR/config/plugins/installed_plugins.json" ]; then
+    ln -sf "$REPO_DIR/config/plugins/installed_plugins.json" "$CLAUDE_DIR/plugins/installed_plugins.json"
     echo "  Linked: plugins/installed_plugins.json"
   fi
 fi
@@ -209,13 +217,13 @@ fi
 # Copy it as a starting point if none exists
 if $DRY_RUN; then
   if [ ! -f "$CLAUDE_DIR/settings.json" ]; then
-    echo "[DRY RUN] Copy: $REPO_DIR/settings.json -> $CLAUDE_DIR/settings.json (template)"
+    echo "[DRY RUN] Copy: $REPO_DIR/config/settings.json -> $CLAUDE_DIR/settings.json (template)"
   else
     echo "[DRY RUN] Skip: settings.json (already exists, contains machine-specific config)"
   fi
 else
   if [ ! -f "$CLAUDE_DIR/settings.json" ]; then
-    cp "$REPO_DIR/settings.json" "$CLAUDE_DIR/settings.json"
+    cp "$REPO_DIR/config/settings.json" "$CLAUDE_DIR/settings.json"
     echo "  Copied: settings.json (template — edit machine-specific paths)"
   else
     echo "  Skipped: settings.json (already exists, contains machine-specific config)"
@@ -225,18 +233,18 @@ fi
 # Install plugins if claude CLI is available
 if $DRY_RUN; then
   echo ""
-  if command -v claude &> /dev/null && [ -f "$REPO_DIR/plugins/plugins.json" ]; then
+  if command -v claude &> /dev/null && [ -f "$REPO_DIR/config/plugins/plugins.json" ]; then
     echo "[DRY RUN] Would install plugins from plugins/plugins.json"
   else
     echo "[DRY RUN] Would skip plugin install (claude CLI not found or plugins.json missing)"
   fi
 else
-  if command -v claude &> /dev/null && [ -f "$REPO_DIR/plugins/plugins.json" ]; then
+  if command -v claude &> /dev/null && [ -f "$REPO_DIR/config/plugins/plugins.json" ]; then
     echo ""
     echo "Installing plugins..."
     python3 -c "
 import json
-with open('$REPO_DIR/plugins/plugins.json') as f:
+with open('$REPO_DIR/config/plugins/plugins.json') as f:
     plugins = json.load(f)['plugins']
 for p in plugins:
     print(p)

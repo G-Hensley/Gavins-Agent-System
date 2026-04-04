@@ -9,11 +9,11 @@ set -uo pipefail
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
-REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 AGENTS_DIR="$REPO_DIR/agents"
 SKILLS_DIR="$REPO_DIR/skills"
 AGENT_MEMORY_DIR="$REPO_DIR/agent-memory"
-PLUGINS_JSON="$REPO_DIR/plugins/plugins.json"
+PLUGINS_JSON="$REPO_DIR/config/plugins/plugins.json"
 CLAUDE_MD="$REPO_DIR/CLAUDE.md"
 MAX_LINES=200
 FIX_MODE=false
