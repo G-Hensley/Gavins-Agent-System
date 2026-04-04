@@ -1,6 +1,7 @@
 ---
 name: automation-engineering
 description: Build CLI tools, automation scripts, data pipelines, and batch processing systems. Use when building command-line tools, writing automation scripts, creating cron jobs, building data pipelines, or processing data in bulk. Also use when the user says "script", "CLI tool", "automate", "batch process", "pipeline", "cron", "ETL", or "bulk operation".
+last_verified: 2026-04-03
 ---
 
 # Automation Engineering

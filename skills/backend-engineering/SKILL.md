@@ -1,6 +1,7 @@
 ---
 name: backend-engineering
 description: Backend development patterns for Python, Node.js, and Java — APIs, services, error handling, logging, and server-side architecture. Use when building API endpoints, services, server-side logic, or working with backend frameworks. Also use when the user says "build an API", "backend", "endpoint", "service layer", "server-side", or when writing Python/Node/Java server code.
+last_verified: 2026-04-03
 ---
 
 # Backend Engineering

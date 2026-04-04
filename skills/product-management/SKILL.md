@@ -1,6 +1,7 @@
 ---
 name: product-management
 description: Create product requirements, user stories, and specifications from brainstormed ideas. Use when transitioning from brainstorming to requirements, when the user needs a PRD, user stories, acceptance criteria, user flows, prioritization, or when scoping a new product or major feature set. Also use when the user says "write a PRD", "define requirements", "user stories", or "prioritize features".
+last_verified: 2026-04-03
 ---
 
 # Product Management

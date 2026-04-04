@@ -1,6 +1,7 @@
 ---
 name: frontend-design
 description: Create production-grade, distinctive frontend interfaces with strong UI/UX principles. Use when building web components, pages, layouts, or applications. Also use when the user says "build a UI", "design this page", "make it look good", "style this", "CSS help", "Tailwind", "responsive design", or when working on any user-facing interface.
+last_verified: 2026-04-03
 ---
 
 # Frontend Design

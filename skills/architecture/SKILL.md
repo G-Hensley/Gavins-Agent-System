@@ -1,6 +1,7 @@
 ---
 name: architecture
 description: Create technical designs from product requirements or feature specs. Use when transitioning from product-management to implementation, when designing system architecture, component boundaries, data models, API contracts, or infrastructure. Also use when the user says "design this", "how should we architect", "system design", "technical spec", or when a feature needs technical planning before coding.
+last_verified: 2026-04-03
 ---
 
 # Architecture

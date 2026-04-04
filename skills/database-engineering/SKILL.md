@@ -1,6 +1,7 @@
 ---
 name: database-engineering
 description: Database design, query optimization, migrations, and data modeling for SQL and NoSQL databases. Use when designing schemas, writing queries, optimizing performance, planning migrations, or working with DynamoDB, PostgreSQL, MySQL, or any database. Also use when the user says "database", "schema", "query", "migration", "index", "data model", or "DynamoDB".
+last_verified: 2026-04-03
 ---
 
 # Database Engineering

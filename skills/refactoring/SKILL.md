@@ -1,6 +1,8 @@
 ---
 name: refactoring
 description: Systematic approach to refactoring code — identify smells, plan changes, execute safely, verify behavior preserved. Use when improving code structure, reducing complexity, extracting modules, consolidating duplicated logic, or cleaning up technical debt. Also use when the user says "refactor", "clean this up", "simplify", "extract", "consolidate", "technical debt", or "code smells".
+follows: code-review
+last_verified: 2026-04-03
 ---
 
 # Refactoring

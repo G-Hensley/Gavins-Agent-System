@@ -1,6 +1,7 @@
 ---
 name: qa-engineering
 description: Test strategy, E2E testing, load testing, and test data management. Use when planning test strategy, writing E2E tests with Playwright, setting up load tests, managing test data, or analyzing test coverage. Also use when the user says "test strategy", "E2E test", "Playwright", "load test", "test coverage", "test plan", "regression testing", or "test data".
+last_verified: 2026-04-03
 ---
 
 # QA Engineering

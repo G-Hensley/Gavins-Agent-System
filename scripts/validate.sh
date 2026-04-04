@@ -31,6 +31,17 @@ for arg in "$@"; do
       echo ""
       echo "Options:"
       echo "  --fix    Auto-create missing agent-memory directories"
+      echo ""
+      echo "Checks:"
+      echo "  1  Dispatch table -> agents/ file coverage"
+      echo "  2  Skill directories have SKILL.md"
+      echo "  3  SKILL.md files under $MAX_LINES lines"
+      echo "  4  Agent .md files under $MAX_LINES lines"
+      echo "  5  Reference files under $MAX_LINES lines"
+      echo "  6  plugins/plugins.json is valid JSON"
+      echo "  7  Agent skill references resolve to existing skill directories"
+      echo "  8  Every agent has a corresponding agent-memory/ directory"
+      echo "  9  SKILL.md last_verified staleness (warns if >90 days — does not fail)"
       exit 0
       ;;
     *)
@@ -46,6 +57,7 @@ done
 # ---------------------------------------------------------------------------
 PASS=0
 FAIL=0
+WARN=0
 
 pass() {
   echo "  [+] $1"
@@ -55,6 +67,11 @@ pass() {
 fail() {
   echo "  [X] $1"
   FAIL=$((FAIL + 1))
+}
+
+warn() {
+  echo "  [!] $1"
+  WARN=$((WARN + 1))
 }
 
 section() {
@@ -251,18 +268,71 @@ while IFS= read -r agent_file; do
 done < <(find "$AGENTS_DIR" -name "*.md")
 
 # ---------------------------------------------------------------------------
+# Check 9: Skill staleness — warn if last_verified is older than 90 days
+# Uses python3 for date math (macOS date command has limited arithmetic)
+# ---------------------------------------------------------------------------
+section "SKILL.md staleness check (last_verified > 90 days = warning)"
+
+STALE_THRESHOLD=90
+
+while IFS= read -r skill_md; do
+  skill_rel="${skill_md#$REPO_DIR/}"
+  # Extract last_verified value from frontmatter
+  last_verified=$(python3 -c "
+import sys, re
+content = open(sys.argv[1]).read()
+# Only look within frontmatter (between first and second ---)
+parts = content.split('---')
+if len(parts) < 3:
+    sys.exit(0)
+fm = parts[1]
+m = re.search(r'^last_verified:\s*(\S+)', fm, re.MULTILINE)
+if m:
+    print(m.group(1))
+" "$skill_md" 2>/dev/null)
+
+  if [ -z "$last_verified" ]; then
+    warn "$skill_rel has no last_verified field"
+    continue
+  fi
+
+  # Compare last_verified against today using python3 for portable date math
+  days_ago=$(python3 -c "
+from datetime import date
+try:
+    verified = date.fromisoformat('$last_verified')
+    delta = (date.today() - verified).days
+    print(delta)
+except Exception:
+    print(-1)
+" 2>/dev/null)
+
+  if [ "$days_ago" -eq -1 ] 2>/dev/null; then
+    warn "$skill_rel has unparseable last_verified: '$last_verified'"
+  elif [ "$days_ago" -gt "$STALE_THRESHOLD" ] 2>/dev/null; then
+    warn "$skill_rel last_verified $days_ago days ago (threshold: $STALE_THRESHOLD days)"
+  else
+    pass "$skill_rel last_verified $days_ago days ago (ok)"
+  fi
+done < <(find "$SKILLS_DIR" -name "SKILL.md")
+
+# ---------------------------------------------------------------------------
 # Summary
 # ---------------------------------------------------------------------------
 echo ""
 echo "=================================================="
 TOTAL=$((PASS + FAIL))
-echo "Results: $PASS/$TOTAL checks passed"
+echo "Results: $PASS/$TOTAL checks passed, $WARN warning(s)"
 if [ "$FAIL" -gt 0 ]; then
   echo "FAIL: $FAIL issue(s) found"
   echo "=================================================="
   exit 1
 else
-  echo "PASS: All checks passed"
+  if [ "$WARN" -gt 0 ]; then
+    echo "PASS (with warnings): All checks passed, $WARN skill(s) may be stale"
+  else
+    echo "PASS: All checks passed"
+  fi
   echo "=================================================="
   exit 0
 fi

@@ -1,6 +1,8 @@
 ---
 name: writing-plans
 description: Create detailed implementation plans from technical designs or specs. Use when you have a spec, architecture doc, or requirements for a multi-step task — before writing any code. Also use when the user says "write a plan", "break this down", "implementation plan", or when transitioning from architecture to coding.
+follows: architecture
+last_verified: 2026-04-03
 ---
 
 # Writing Plans

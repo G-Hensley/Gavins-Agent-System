@@ -90,3 +90,10 @@ Your deliverables are markdown documents in `docs/design/`:
 These documents are what the `frontend-engineering` skill and `frontend-reviewer` agent implement and verify against.
 
 Update your agent memory with design decisions, brand guidelines, and recurring patterns across projects.
+
+## Handoff
+
+You produce `docs/design/design-system.md` (and optionally `docs/design/<feature>-layout.md` files). This artifact is consumed by:
+- **frontend-engineer** — implements components and layouts from your design system
+
+See `docs/HANDOFF-PROTOCOLS.md` section "UI/UX Designer → Frontend-Engineer" for the complete handoff contract.

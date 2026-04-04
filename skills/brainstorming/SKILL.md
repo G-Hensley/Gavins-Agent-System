@@ -1,6 +1,7 @@
 ---
 name: brainstorming
 description: Collaborative ideation for features, components, or entire projects. Use before any creative work — new features, new projects, new components, major changes, or when the user says "let's think about", "I want to build", "how should we approach", or describes a new idea. Do NOT use for implementation — hand off to product-management or architecture skills after.
+last_verified: 2026-04-03
 ---
 
 # Brainstorming

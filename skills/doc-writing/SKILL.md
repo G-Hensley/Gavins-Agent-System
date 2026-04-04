@@ -1,6 +1,8 @@
 ---
 name: doc-writing
 description: Write and maintain project documentation — CLAUDE.md files, READMEs, ADRs, runbooks, API docs, and changelogs. Use when creating or updating any project documentation, when the user says "write docs", "update README", "document this", "write a runbook", "update CLAUDE.md", or when capturing session learnings into project files.
+follows: validation-and-verification
+last_verified: 2026-04-03
 ---
 
 # Doc Writing

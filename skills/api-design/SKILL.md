@@ -1,6 +1,7 @@
 ---
 name: api-design
 description: Design and document APIs — REST, GraphQL, OpenAPI specs, versioning, rate limiting, pagination, and error contracts. Use when designing new APIs, documenting existing ones, writing OpenAPI specs, or planning API versioning strategy. Also use when the user says "API design", "OpenAPI", "Swagger", "REST design", "API versioning", "rate limiting", or "API contract".
+last_verified: 2026-04-03
 ---
 
 # API Design

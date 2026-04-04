@@ -57,3 +57,11 @@ After writing, the product-reviewer agent validates the PRD before handoff to th
 - Don't write stories too large to implement in one cycle — split them
 
 Update your agent memory with product patterns, recurring requirements, and stakeholder preferences.
+
+## Handoff
+
+You produce `docs/prd/YYYY-MM-DD-<project>-prd.md`. This artifact is consumed by:
+- **product-reviewer** — validates requirements clarity and completeness
+- **architect** — designs the technical solution to meet these requirements
+
+See `docs/HANDOFF-PROTOCOLS.md` section "Product Manager → Architect" for the complete handoff contract.

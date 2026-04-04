@@ -1,6 +1,7 @@
 ---
 name: skill-router
 description: Ensure the right skills activate for every task. Use when starting any conversation, beginning a new task, or switching between tasks. Check which skills apply and invoke them before responding. If there is even a small chance a skill is relevant, invoke it.
+last_verified: 2026-04-03
 ---
 
 # Skill Router

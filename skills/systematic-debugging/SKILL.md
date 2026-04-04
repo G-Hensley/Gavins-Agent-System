@@ -1,6 +1,7 @@
 ---
 name: systematic-debugging
 description: Systematic root-cause debugging process. Use when encountering any bug, test failure, unexpected behavior, performance problem, or build failure — before proposing fixes. Also use when a previous fix didn't work, when under time pressure, or when the issue seems "simple" but persists.
+last_verified: 2026-04-03
 ---
 
 # Systematic Debugging

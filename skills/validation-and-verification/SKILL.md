@@ -1,6 +1,7 @@
 ---
 name: validation-and-verification
 description: Require evidence before any success claims. Use before claiming work is complete, fixed, passing, or ready — before committing, creating PRs, or moving to the next task. Also use when reviewing agent output, when about to express satisfaction with results, or when the user asks "does it work" or "is it done".
+last_verified: 2026-04-03
 ---
 
 # Validation and Verification

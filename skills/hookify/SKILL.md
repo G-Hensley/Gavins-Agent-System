@@ -1,6 +1,7 @@
 ---
 name: hookify
 description: Create and manage Claude Code hooks that warn or block unwanted behaviors. Use when the user wants to prevent dangerous commands, protect sensitive files, enforce coding patterns, or create automated safety checks. Also use when the user says "create a hook", "block this", "warn me when", "don't let me", or "add a safety rule".
+last_verified: 2026-04-03
 ---
 
 # Hookify

@@ -1,6 +1,7 @@
 ---
 name: git-workflow
 description: Complete git workflow — worktree setup, commits, pushing, PRs, branch cleanup, and finishing development branches. Use when doing any git operation including committing, pushing, creating PRs, setting up worktrees, cleaning up branches, or finishing implementation work. Also use when the user says "commit", "push", "create a PR", "set up a worktree", "clean up branches", "I'm done", or "ready to merge".
+last_verified: 2026-04-03
 ---
 
 # Git Workflow

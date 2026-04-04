@@ -62,3 +62,12 @@ After writing, the architecture-reviewer agent validates the design before hando
 - Don't ignore existing codebase patterns
 
 Update your agent memory with architectural decisions and patterns across projects.
+
+## Handoff
+
+You produce `docs/architecture/YYYY-MM-DD-<topic>-design.md`. This artifact is consumed by:
+- **architecture-reviewer** — validates design coherence and soundness
+- **threat-modeler** — uses design to identify security threats and propose mitigations
+- **implementers** (backend-engineer, frontend-engineer, database-engineer) — build from this design
+
+See `docs/HANDOFF-PROTOCOLS.md` section "Architect → Implementation Team" for the complete handoff contract.

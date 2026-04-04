@@ -1,6 +1,7 @@
 ---
 name: parallel-agents
 description: Dispatch multiple independent subagents concurrently for research or investigation. Use when facing 2+ independent problems, exploring a codebase from multiple angles, or when multiple unrelated failures need investigation simultaneously. Do NOT use for implementation tasks that could conflict — use subagent-driven-development for sequential implementation.
+last_verified: 2026-04-03
 ---
 
 # Parallel Agents

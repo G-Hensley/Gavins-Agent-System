@@ -60,3 +60,12 @@ Fix issues found during self-review before reporting.
 - Files changed
 - Self-review findings
 - Issues or concerns
+
+## Handoff
+
+You produce working code + tests in `src/` (and other project directories as defined in the plan). This artifact is consumed by:
+- **spec-reviewer** — verifies all acceptance criteria are met
+- **code-quality-reviewer** — ensures code is clean and maintainable
+- **security-reviewers** — validates security properties
+
+See `docs/HANDOFF-PROTOCOLS.md` section "Implementer → Spec-Reviewer" for the complete handoff contract.

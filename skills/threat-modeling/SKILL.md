@@ -1,6 +1,7 @@
 ---
 name: threat-modeling
 description: Build threat models using the VAST (Visual, Agile, Simple Threat) methodology. Use when designing new systems, reviewing architecture for security, assessing attack surfaces, or when the user says "threat model", "attack surface", "security assessment", "VAST", "threat analysis", or "what could go wrong". Also use before major releases or after significant architecture changes.
+last_verified: 2026-04-03
 ---
 
 # Threat Modeling (VAST)

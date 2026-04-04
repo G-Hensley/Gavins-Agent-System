@@ -1,6 +1,7 @@
 ---
 name: security
 description: Security review, hardening, and best practices across all layers — frontend, API, database, AWS, supply chain, and application security. Use when writing code that handles user input, authentication, authorization, data storage, API endpoints, infrastructure, or dependencies. Also use when the user says "security review", "harden this", "is this secure", "OWASP", or when reviewing code for vulnerabilities.
+last_verified: 2026-04-03
 ---
 
 # Security

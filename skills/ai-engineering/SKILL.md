@@ -1,6 +1,7 @@
 ---
 name: ai-engineering
 description: Build AI-powered applications — agents, chatbots, automation, pipelines, RAG systems, and LLM integrations across any provider (Claude, OpenAI, Hugging Face, local models). Use when building agentic systems, chatbots, AI features, prompt engineering, RAG, fine-tuning workflows, or integrating any LLM. Also use when the user says "build an agent", "chatbot", "AI automation", "LLM", "RAG", "embeddings", "prompt engineering", "AI pipeline", or works with any AI/ML API.
+last_verified: 2026-04-03
 ---
 
 # AI Engineering

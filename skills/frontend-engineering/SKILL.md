@@ -1,6 +1,7 @@
 ---
 name: frontend-engineering
 description: Frontend development with React, Next.js, TypeScript — component architecture, state management, performance, and implementation. Use when building React components, pages, or applications. Also use when the user says "React", "Next.js", "component", "state management", "frontend performance", "SSR", "client-side", or when implementing designs from the UI/UX design system. Works FROM architecture decisions and frontend-design's design system docs.
+last_verified: 2026-04-03
 ---
 
 # Frontend Engineering

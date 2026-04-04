@@ -1,6 +1,7 @@
 ---
 name: executing-plans
 description: Execute an implementation plan inline in the current session. Use for small-to-medium plans when subagent-driven development is overkill, or when the user chooses inline execution after writing a plan. Also use when the user says "execute this plan", "run through the plan", or "implement this".
+last_verified: 2026-04-03
 ---
 
 # Executing Plans

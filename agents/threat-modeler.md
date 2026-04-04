@@ -78,3 +78,11 @@ For each identified threat:
 - Don't invent threats without evidence from the design — every threat traces to a component or flow
 
 Update your agent memory with threat patterns and common mitigations across projects.
+
+## Handoff
+
+You produce `docs/security/YYYY-MM-DD-<topic>-threat-model.md`. This artifact is consumed by:
+- **implementers** — add mitigations to their task list (implementation-level threats)
+- **security-reviewers** — validate that code implements recommended mitigations
+
+See `docs/HANDOFF-PROTOCOLS.md` section "Threat-Modeler → Implementation Team" for the complete handoff contract.

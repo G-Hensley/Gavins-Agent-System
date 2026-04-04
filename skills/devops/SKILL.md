@@ -1,6 +1,7 @@
 ---
 name: devops
 description: DevOps and DevSecOps — CI/CD pipelines, Docker, AWS infrastructure, monitoring, deployment strategies, and infrastructure as code. Use when setting up pipelines, containerizing applications, managing AWS infrastructure, configuring monitoring, or automating deployments. Also use when the user says "CI/CD", "Docker", "deploy", "infrastructure", "monitoring", "pipeline", "CloudFormation", "CDK", or "Terraform".
+last_verified: 2026-04-03
 ---
 
 # DevOps
