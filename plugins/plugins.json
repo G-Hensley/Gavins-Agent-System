@@ -1,0 +1,25 @@
+{
+  "description": "Plugins to install on a new machine. Run: claude plugin install <name>",
+  "plugins": [
+    "agent-sdk-dev@claude-plugins-official",
+    "asana@claude-plugins-official",
+    "claude-code-setup@claude-plugins-official",
+    "claude-md-management@claude-plugins-official",
+    "code-review@claude-plugins-official",
+    "code-simplifier@claude-plugins-official",
+    "commit-commands@claude-plugins-official",
+    "context7@claude-plugins-official",
+    "explanatory-output-style@claude-plugins-official",
+    "feature-dev@claude-plugins-official",
+    "frontend-design@claude-plugins-official",
+    "github@claude-plugins-official",
+    "greptile@claude-plugins-official",
+    "hookify@claude-plugins-official",
+    "playwright@claude-plugins-official",
+    "ralph-loop@claude-plugins-official",
+    "security-guidance@claude-plugins-official",
+    "skill-creator@claude-plugins-official",
+    "supabase@claude-plugins-official",
+    "typescript-lsp@claude-plugins-official"
+  ]
+}

@@ -1,0 +1,44 @@
+# Machine-local state (never commit)
+.DS_Store
+*.swp
+*.swo
+
+# Claude Code ephemeral state
+.credentials.json
+history.jsonl
+stats-cache.json
+security_warnings_state_*.json
+vercel-plugin-*
+
+# Session/cache directories
+cache/
+chrome/
+debug/
+downloads/
+file-history/
+ide/
+paste-cache/
+session-env/
+sessions/
+shell-snapshots/
+statsig/
+telemetry/
+todos/
+
+# Plugin caches (config is tracked, caches are not)
+plugins/cache/
+plugins/data/
+plugins/blocklist.json
+plugins/install-counts-cache.json
+plugins/installed_plugins.json
+plugins/known_marketplaces.json
+plugins/marketplaces/
+
+# Task state (ephemeral per-session)
+tasks/
+
+# Project-specific memory (lives per-machine in ~/.claude/projects/)
+projects/
+
+# Local settings override
+.claude/
