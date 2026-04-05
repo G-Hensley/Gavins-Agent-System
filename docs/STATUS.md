@@ -97,15 +97,15 @@ Last updated: 2026-04-04
 
 | # | Improvement | Status | Notes |
 |---|---|---|---|
-| 20 | Dependency management reference | Planned | Shared ref for backend, frontend, automation skills |
-| 21 | TypeScript strictness rules | Planned | `.claude/rules/typescript.md` with path scope |
-| 22 | Python project structure rules | Planned | `.claude/rules/python.md` with path scope |
-| 23 | Project structure references | Planned | Next.js, React, API frameworks, AI projects |
-| 24 | Error handling patterns | Planned | Backend + frontend refs, production hygiene rules |
-| 25 | Database references expansion | Planned | DynamoDB, MongoDB, PostgreSQL pattern refs |
-| 26 | Google Cloud references | Planned | GCP infra + security refs |
-| 27 | API versioning + auto-docs | Planned | Versioning, semver, OAS generation patterns |
-| 28 | GitHub Actions CI/CD template | Planned | claude-code-action + security-review workflows |
+| 20 | Dependency management reference | Done | backend-engineering/references/dependency-management.md |
+| 21 | TypeScript strictness rules | Done | rules/typescript.md enhanced with strictness rules |
+| 22 | Python project structure rules | Done | rules/python.md enhanced with project structure |
+| 23 | Project structure references | Done | nextjs-structure.md, python-structure.md, project-structure.md (AI) |
+| 24 | Error handling patterns | Done | error-handling.md for backend + frontend |
+| 25 | Database references expansion | Done | dynamodb-patterns.md, mongodb-patterns.md, postgresql-patterns.md |
+| 26 | Google Cloud references | Done | gcp-infrastructure.md + gcp-security.md |
+| 27 | API versioning + auto-docs | Done | versioning-and-docs.md in api-design |
+| 28 | GitHub Actions CI/CD template | Done | templates/github-actions/ci.yml + claude-review.yml |
 
 ## What's Left
 
