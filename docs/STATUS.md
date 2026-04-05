@@ -59,27 +59,41 @@ Last updated: 2026-04-04
 
 **4/4 passed. All followed TDD. All verified.**
 
-### Tier 2 — Multi-Agent (not yet run)
+### Tier 2 — Multi-Agent (2026-04-04)
 
-| Eval | Target Agents | Status |
+| Eval | Agents Dispatched | Design First | TDD | Grade |
+|---|---|---|---|---|
+| Tic-Tac-Toe | uiux-designer -> frontend-engineer | Design system created | 26 tests Red->Green | PASS |
+| File Watcher | automation-engineer -> devops-engineer | N/A | 19 tests Red->Green | PASS |
+| Secrets Scanning | devsecops-engineer -> devops-engineer -> threat-modeler | N/A | N/A (config) | PASS |
+
+**3/3 passed. All dispatched correct agents in correct order.**
+
+### Tier 3 — Architecture-First (2026-04-04)
+
+| Eval | Pipeline | Architecture | Threat Model | Tests | Grade |
+|---|---|---|---|---|---|
+| Snake Game | PRD -> Arch -> Threat -> Impl | Yes | 8 threats (VAST) | 57 tests | PASS |
+| Three.js Scene | Design -> Arch -> Review -> Impl | Yes | Client-only (documented) | 28 tests | PASS |
+| RAG System | Arch -> Threat -> AI + DB Eng | Yes | 10 threats (prompt injection) | 55 tests | PASS |
+
+**3/3 passed. All produced architecture docs before implementation. Threat models where applicable.**
+
+### Tier 4 — Full Workflow (2026-04-04)
+
+| Stage | Agent(s) | Output |
 |---|---|---|
-| Tic-Tac-Toe | uiux-designer -> frontend-engineer | Pending |
-| File Watcher | automation-engineer -> devops-engineer | Pending |
-| Secrets Scanning | devsecops-engineer -> devops-engineer | Pending |
+| Brainstorm | brainstorming skill | brainstorm.md |
+| PRD | product-manager | prd.md (12 user stories) |
+| Architecture | architect | architecture.md (DynamoDB + 13 endpoints) |
+| Threat Model | threat-modeler | threat-model.md (22 threats, STRIDE) |
+| Plan | writing-plans | plan.md (19 tasks) |
+| Implementation | backend-engineer + frontend-engineer | 42 source files, 104 tests |
+| Quality Review | code-quality-reviewer | 10 findings, 4 critical fixed |
+| Security Review | 4 reviewers in parallel | Critical fixes applied |
+| Documentation | doc-writer | README + API ref + architecture overview |
 
-### Tier 3 — Architecture-First (not yet run)
-
-| Eval | Target Agents | Status |
-|---|---|---|
-| Snake Game | product-manager -> architect -> backend + frontend + qa | Pending |
-| Three.js Scene | uiux-designer -> architect -> frontend-engineer | Pending |
-| RAG System | architect -> ai-engineer + database-engineer | Pending |
-
-### Tier 4 — Full Workflow (not yet run)
-
-| Eval | Target Agents | Status |
-|---|---|---|
-| Task Manager App | Full pipeline (all agents) | Pending |
+**PASS — Full pipeline executed. 104 tests. 8 documentation files. Critical review findings resolved.**
 
 ---
 
@@ -109,10 +123,10 @@ Last updated: 2026-04-04
 
 ## What's Left
 
-### Eval Runs Remaining
-- [ ] Run Tier 2 evals (3 multi-agent handoff tests)
-- [ ] Run Tier 3 evals (3 architecture-first tests)
-- [ ] Run Tier 4 eval (full pipeline end-to-end)
+### Eval Runs
+- [x] Run Tier 2 evals — 3/3 passed
+- [x] Run Tier 3 evals — 3/3 passed
+- [x] Run Tier 4 eval — PASSED (full pipeline, 104 tests, 22 threats, 10 review findings)
 
 ### V3 Priority Order (system infrastructure first, then content)
 1. TypeScript strictness rules (#21) — path-scoped, immediate quality impact
