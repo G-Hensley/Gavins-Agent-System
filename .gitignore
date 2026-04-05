@@ -48,6 +48,8 @@ tier1-*/
 tier2-*/
 tier3-*/
 tier4-*/
+**/output/
+evals/**/output/
 
 # Local settings override
 .claude/
