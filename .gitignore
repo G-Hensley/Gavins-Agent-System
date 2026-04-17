@@ -58,3 +58,7 @@ evals/**/output/
 # Keep the directory + README in the repo so install.sh has a symlink target.
 agent-memory/*
 !agent-memory/README.md
+
+# Anthropic-sourced research notes (kept locally for reference, not redistributed)
+claude-code-cowork-research.md
+docs/claude-code-cowork-reference.md
