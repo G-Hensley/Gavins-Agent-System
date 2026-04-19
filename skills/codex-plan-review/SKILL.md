@@ -12,6 +12,13 @@ Adversarial second-opinion on drafted plans where rework is expensive.
 
 ## Process
 
+### 0. Scope check
+
+This skill operates on **written plan documents** — a `.md` file you can read and append to. Confirm the plan has a backing file before proceeding.
+
+- If there is no backing plan `.md`, exit immediately with: "Inline plan — out of scope for codex-plan-review per `rules/codex-plan-review.md`."
+- Otherwise proceed to step 1.
+
 ### 1. Check triggers
 
 Scan the drafted plan for any of these (full detail in `rules/codex-plan-review.md`):
@@ -55,17 +62,28 @@ Template:
 
     <paste plan text here>
 
-### 3. Invoke Codex
+### 3. Invoke Codex via the rescue subagent
 
-Run the shared companion in read-only mode (no `--write`):
+Dispatch the `codex:rescue` subagent using the Agent tool. Frame the task as **review only** so the rescue runtime does not add `--write` to the underlying Codex invocation.
 
-    node "${CLAUDE_PLUGIN_ROOT}/scripts/codex-companion.mjs" task "<prompt>"
+Agent tool invocation:
+- `subagent_type`: `codex:rescue`
+- `description`: `Adversarial plan review`
+- `prompt`: the full structured-checklist prompt from step 2, with a leading sentence: "REVIEW ONLY. Do not edit any files. Return your findings as prose grouped by the six section headings."
 
-For large plans (>500 lines or >10 tasks), run in background:
+Why the rescue agent: it wraps the shared Codex runtime (`codex-companion.mjs`), handles `CLAUDE_PLUGIN_ROOT` resolution internally, and is the documented integration path for "second opinion" work.
 
-    node "${CLAUDE_PLUGIN_ROOT}/scripts/codex-companion.mjs" task --background "<prompt>"
+For large plans (>500 lines or >10 tasks), append to the prompt: "Run this in the background via `--background` and return when complete."
 
-If Codex fails or is unavailable, proceed to step 5 with `Codex review attempted but failed` noted in the appendix. Do NOT block the plan.
+**If the `codex:rescue` agent is unavailable** (the Codex plugin is not installed, or dispatch errors with a missing-subagent message):
+- Treat this as a **missing-installation** failure.
+- Proceed to step 5 and note `Codex rescue agent not available — plugin likely not installed` in the appendix.
+- In the user-facing summary (step 6), flag this explicitly so the user can remediate (install the `codex` Claude Code plugin).
+
+**If the agent is available but the review itself errors** (transient runtime failure, timeout, malformed response):
+- Treat this as a **transient failure**.
+- Proceed to step 5 and note `Codex review attempted but failed: <short reason>` in the appendix.
+- No user notification needed in the summary — the appendix is enough.
 
 ### 4. Resolve findings
 
@@ -112,9 +130,13 @@ User approves or requests further changes.
 
 ## Composition
 
-- Called from `writing-plans` after plan draft, before handoff to execution.
-- Called from `subagent-driven-development` if plans are drafted mid-flow.
-- Callable ad-hoc by the user: "review this plan with Codex".
+This skill is invoked by the always-active rule in `rules/codex-plan-review.md`, not called directly by other skills. In practice that means it fires during:
+
+- `writing-plans` flows that produce a plan `.md` file.
+- `subagent-driven-development` flows that draft a new plan mid-flow.
+- Ad-hoc user requests like "review this plan with Codex" (only if the plan has a backing `.md`).
+
+If the task is an inline conversational plan with no backing file, the scope check in step 0 exits before any review runs.
 
 ## Constraints
 
@@ -122,3 +144,4 @@ User approves or requests further changes.
 - Read-only — never add `--write` to the Codex invocation.
 - Never skip the review silently when a trigger matches — exit only on no-match.
 - Fail open on Codex unavailability — log it in the appendix, do not block the plan.
+- Prefer the `codex:rescue` subagent for invocation over direct shell-out to `codex-companion.mjs`. The rescue agent handles env var resolution (`CLAUDE_PLUGIN_ROOT`) and the runtime contract. Only shell out directly if you know exactly where the companion lives and you have a reason to bypass the rescue path.
