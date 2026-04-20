@@ -102,7 +102,7 @@ Do not create the skill/agent yourself — just log the suggestion. I'll review 
 
 ## Memory
 
-Persistent memory lives at `~/.claude/projects/-Users-gavinhensley--claude/memory/`. Use it to store:
+Persistent memory lives under `~/.claude/projects/<encoded-working-dir>/memory/` — Claude Code auto-encodes the current working directory into a folder name. Primary on Windows right now: `C:\Users\Gavin Hensley\.claude\projects\C--Users-Gavin-Hensley-Projects\memory\` (for the `Projects/` workspace). Mac workstation used `~/.claude/projects/-Users-gavinhensley--claude/memory/` when active. Use this memory to store:
 - Learnings about my preferences and work patterns
 - Feedback I give about how to approach work
 - Project context that's useful across conversations

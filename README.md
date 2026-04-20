@@ -15,9 +15,9 @@ Instead of scattering configuration across machines, this system is:
 ## Repository Structure
 
 ```
-skills/              # 35 reusable skills (each with SKILL.md + references/)
+skills/              # 36 reusable skills (each with SKILL.md + references/)
 agents/              # 24 specialist agents (prompts + configuration)
-commands/            # 5 slash commands (/improve, /plan, /review, /setup, /status)
+commands/            # 6 slash commands (/git-health-check, /improve, /plan, /review, /setup, /status)
 rules/               # 11 path-scoped rules (glob-activated domain instructions)
 agent-memory/        # Persistent learnings per agent (loaded per session)
 improvements/        # Backlog for skill/agent enhancements
@@ -72,7 +72,7 @@ Backups are created as `.bak` files if existing files are replaced.
 After install, your Claude Code sessions will load these skills and agents automatically. Check:
 
 ```bash
-ls -la ~/.claude/skills      # Should see 35 skill directories
+ls -la ~/.claude/skills      # Should see 36 skill directories
 ls -la ~/.claude/agents      # Should see 24 agent definitions
 claude skill list            # See available skills
 ```
