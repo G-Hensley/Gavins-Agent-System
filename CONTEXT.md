@@ -128,7 +128,7 @@ improvements/        # Suggestions log for system enhancements (system/ subdir +
 coaching/            # Dated output from the weekly-claude-code-coach Cowork task
 templates/           # Starter templates for new skills / agents / commands
 config/              # settings.json (template), settings.local.json, hooks.json, plugins/plugins.json (21 tracked)
-scripts/             # install.sh, validate.sh, hooks/ (5 hooks: block-destructive, doc-drift-check, lint-on-save, verify-tests, warn-no-tests)
+scripts/             # install.sh, validate.sh, hooks/ (6 hooks: block-destructive, doc-drift-check, lint-on-save, pr-push-nudge, verify-tests, warn-no-tests)
 docs/                # FAILURE-MODES, HANDOFF-PROTOCOLS, IMPROVEMENTS, PROJECT-IDEAS, REFERENCE-GAPS, SKILL-CHAINS, STATUS, claude-code-cowork-reference
 CLAUDE.md            # Global instructions (symlinked to ~/.claude/CLAUDE.md)
 CONTEXT.md           # This file

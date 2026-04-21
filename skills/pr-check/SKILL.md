@@ -108,4 +108,4 @@ Short, scannable. No narration of every file read. Report the table + summary bl
 
 - `validation-and-verification` skill — the "evidence before assertions" gate that step 4's verification pass implements.
 - `git-workflow` skill — references/quick-commands.md has the commit / push patterns.
-- `commit-commands:commit-push-pr` skill — overlapping territory for the happy-path "commit and open PR" flow; this skill is about the *post-PR review* cycle.
+- `commit-push-pr` from the `commit-commands` plugin — overlapping territory for the happy-path "commit and open PR" flow. This skill is about the *post-PR review* cycle, not PR creation. (Note: `commit-commands` is a plugin, not a local `skills/` entry — don't look for it under `skills/commit-commands/`.)
