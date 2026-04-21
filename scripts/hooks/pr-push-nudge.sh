@@ -7,6 +7,13 @@ set -uo pipefail
 INPUT=$(cat)
 COMMAND=$(echo "$INPUT" | python3 -c "import sys,json; print(json.load(sys.stdin).get('tool_input',{}).get('command',''))" 2>/dev/null || echo "")
 
+# Skip if the command itself failed — a failed push or create shouldn't trigger
+# a "go run /pr-check" nudge since there's nothing new to check.
+EXIT_CODE=$(echo "$INPUT" | python3 -c "import sys,json; r=json.load(sys.stdin).get('tool_result',{}); print(r.get('exit_code','') if isinstance(r,dict) else '')" 2>/dev/null || echo "")
+if [ -n "$EXIT_CODE" ] && [ "$EXIT_CODE" != "0" ]; then
+  exit 0
+fi
+
 fire=0
 case "$COMMAND" in
   *"gh pr create"*)
