@@ -2,7 +2,7 @@
 
 Current status of improvements from [IMPROVEMENTS.md](./IMPROVEMENTS.md) and eval runs.
 
-Last updated: 2026-04-20
+Last updated: 2026-04-21
 
 ---
 
@@ -123,6 +123,7 @@ Last updated: 2026-04-20
 | 29 | Doc-sync skill + drift hook | Done | skills/doc-sync/, documentation.md rule, drift hook on structural changes |
 | 30 | Codex plan review | Done | skills/codex-plan-review/, rules/codex-plan-review.md, 8 tier-1 fixtures, rescue-agent routing |
 | 31 | Git health check | Done | skills/git-health-check/, commands/git-health-check.md — detects HEAD truncation, .corrupt.backup, dangling locks |
+| 32 | PR check (rename+rewrite of resolve-pr-comments) | Done | skills/pr-check/, commands/pr-check.md, scripts/hooks/pr-push-nudge.sh — stale-detection, CI/merge state, thematic commits, Copilot retrigger |
 
 ## What's Left
 
