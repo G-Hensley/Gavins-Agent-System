@@ -59,6 +59,28 @@ Single table. Columns: Check | Status (OK / WARN / FAIL) | Details | Suggested f
 
 If any FAIL, end with: "Run `/git-health-check --fix` to apply the safe repairs."
 
+## `--fix` Scope
+
+`--fix` is limited to the specific safe mutations below. If a case is not listed here, do **not** change it automatically.
+
+`--fix` **may** automatically:
+
+- Rewrite `.git/HEAD` **only** for the trailing-slash truncation case (`ref: refs/heads/.../`) **and only if** `.git/logs/HEAD` contains a recoverable `checkout:` target, the recovered branch name is unambiguous, and the resolved ref exists either as `.git/refs/heads/<name>` or in `.git/packed-refs`.
+- Append a trailing newline to `.git/HEAD` **only if** the file is otherwise valid as either `ref: refs/heads/<name>` with a resolvable target or a detached 40-char hex sha that `git cat-file -e` resolves.
+- Remove stale `.lock` files under `.git/` **only if** they are older than 5 minutes **and** `fuser` / `lsof` confirms that no live process currently holds them.
+
+`--fix` **must prompt / confirm** for:
+
+- Deleting `.git/*.corrupt*`, `.git/*.bak`, or `.git/*.orig` artifacts — first report them, verify the live equivalent is intact via byte-compare, and ask the user before deleting.
+- Any repair where the evidence is ambiguous, including multiple plausible HEAD branch targets or a missing / pruned reflog.
+
+`--fix` **must never** automatically:
+
+- Delete `.git/*.corrupt.backup` files without explicit user confirmation.
+- Delete branches under `.git/refs/heads/dependabot/`.
+- Rewrite `.git/HEAD` when `.git/logs/HEAD` has zero usable `checkout:` entries or the recovered target cannot be validated.
+- Modify or delete `.git/gk/` or `.git/filter-repo/`.
+
 ## What NOT to Do
 
 - Do not run `git fsck --full` unprompted — it's slow and noisy.

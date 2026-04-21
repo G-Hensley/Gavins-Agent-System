@@ -30,7 +30,7 @@ Scan the drafted plan for any of these (full detail in `rules/codex-plan-review.
 5. Data migrations / backfills touching prod data
 6. Irreversible one-shots (mass emails, package publishes, release tags, external side effects)
 
-**No match → exit silently.** The plan continues unchanged. Note which triggers you considered so the user can see your reasoning if asked.
+**No match → exit silently.** The plan continues unchanged and there is no user-facing output for this step.
 
 **Match →** note which triggers fired. Proceed to step 2.
 

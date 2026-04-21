@@ -5,15 +5,23 @@
 #   (2) warn if commit touches structural paths (skills/|agents/|commands/|rules/|scripts/hooks/|config/)
 #       and docs/STATUS.md "Last updated:" is >14 days old
 # Never blocks (exit 0 always).
+set -uo pipefail
 
 INPUT=$(cat)
-COMMAND=$(echo "$INPUT" | python3 -c "import sys,json; print(json.load(sys.stdin).get('tool_input',{}).get('command',''))" 2>/dev/null)
+COMMAND=$(echo "$INPUT" | python3 -c "import sys,json; print(json.load(sys.stdin).get('tool_input',{}).get('command',''))" 2>/dev/null || echo "")
 
 # Only trigger on git commit commands
 case "$COMMAND" in
   git\ commit*) ;;
   *) exit 0 ;;
 esac
+
+# Skip if the commit itself failed — otherwise we'd report drift against the
+# previous commit instead of the attempted one.
+EXIT_CODE=$(echo "$INPUT" | python3 -c "import sys,json; r=json.load(sys.stdin).get('tool_result',{}); print(r.get('exit_code','') if isinstance(r,dict) else '')" 2>/dev/null || echo "")
+if [ -n "$EXIT_CODE" ] && [ "$EXIT_CODE" != "0" ]; then
+  exit 0
+fi
 
 # --- Check 1: generic doc drift (3+ commits since last .md change) ---
 LAST_DOC_COMMIT=$(git log -1 --format=%H -- '*.md' 2>/dev/null)
