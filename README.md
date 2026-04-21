@@ -4,7 +4,7 @@ A portable, version-controlled configuration of Claude Code skills, agents, comm
 
 ## What This Is
 
-This repository packages Gavin Hensley's complete Claude Code environment — 34 reusable skills, 24 specialist agents, 10 path-scoped rules, 5 enforcement hooks, slash commands, persistent agent memory, and global Claude instructions. Everything is designed for API security, CLI tooling, backend/frontend development, and multi-agent automation.
+This repository packages Gavin Hensley's complete Claude Code environment — 36 reusable skills, 24 specialist agents, 11 path-scoped rules, 5 enforcement hooks, 6 slash commands, persistent agent memory, and global Claude instructions. Everything is designed for API security, CLI tooling, backend/frontend development, and multi-agent automation.
 
 Instead of scattering configuration across machines, this system is:
 - **Version-controlled** — Every skill, agent, and setting is in git. Review changes, rollback mistakes, share improvements.
@@ -15,10 +15,10 @@ Instead of scattering configuration across machines, this system is:
 ## Repository Structure
 
 ```
-skills/              # 34 reusable skills (each with SKILL.md + references/)
+skills/              # 36 reusable skills (each with SKILL.md and optional references/)
 agents/              # 24 specialist agents (prompts + configuration)
-commands/            # 5 slash commands (/improve, /plan, /review, /setup, /status)
-rules/               # 10 path-scoped rules (glob-activated domain instructions)
+commands/            # 6 slash commands (/git-health-check, /improve, /plan, /review, /setup, /status)
+rules/               # 11 path-scoped rules (glob-activated domain instructions)
 agent-memory/        # Persistent learnings per agent (loaded per session)
 improvements/        # Backlog for skill/agent enhancements
 coaching/            # Dated Claude-authored coaching notes on the system (not synced)
@@ -72,7 +72,7 @@ Backups are created as `.bak` files if existing files are replaced.
 After install, your Claude Code sessions will load these skills and agents automatically. Check:
 
 ```bash
-ls -la ~/.claude/skills      # Should see 34 skill directories
+ls -la ~/.claude/skills      # Should see 36 skill directories
 ls -la ~/.claude/agents      # Should see 24 agent definitions
 claude skill list            # See available skills
 ```
@@ -97,6 +97,7 @@ claude skill list            # See available skills
 - **test-driven-development** — TDD workflow, pytest, Vitest, test patterns
 - **qa-engineering** — Test strategy, E2E testing, load testing, coverage
 - **code-review** — Architecture review, style, patterns, maintainability
+- **codex-plan-review** — Adversarial Codex review on drafted plans before implementation
 - **refactoring** — Code cleanup, performance, tech debt, DRY principles
 - **validation-and-verification** — Testing strategy, correctness proofs
 

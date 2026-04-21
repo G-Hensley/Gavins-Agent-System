@@ -2,7 +2,7 @@
 
 Current status of improvements from [IMPROVEMENTS.md](./IMPROVEMENTS.md) and eval runs.
 
-Last updated: 2026-04-16
+Last updated: 2026-04-20
 
 ---
 
@@ -121,6 +121,8 @@ Last updated: 2026-04-16
 | 27 | API versioning + auto-docs | Done | versioning-and-docs.md in api-design |
 | 28 | GitHub Actions CI/CD template | Done | templates/github-actions/ci.yml + claude-review.yml |
 | 29 | Doc-sync skill + drift hook | Done | skills/doc-sync/, documentation.md rule, drift hook on structural changes |
+| 30 | Codex plan review | Done | skills/codex-plan-review/, rules/codex-plan-review.md, 8 tier-1 fixtures, rescue-agent routing |
+| 31 | Git health check | Done | skills/git-health-check/, commands/git-health-check.md — detects HEAD truncation, .corrupt.backup, dangling locks |
 
 ## What's Left
 

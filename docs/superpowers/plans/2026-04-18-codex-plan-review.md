@@ -449,14 +449,16 @@ For each fixture `evals/tier-1-single-agent/codex-plan-review/fixtures/01-*.md` 
 Expected:
 | Fixture | Triggers fired | Matches criteria? |
 |---|---|---|
-| 01-auth | Auth | ✓ |
-| 02-schema | Schema | ✓ |
+| 01-auth | Auth, Infra | ✓ |
+| 02-schema | Schema, Data migration | ✓ |
 | 03-api-contract | API contract | ✓ |
 | 04-infra | Infra | ✓ |
 | 05-data-migration | Data migration | ✓ |
 | 06-irreversible | Irreversible one-shot | ✓ |
 | 07-no-trigger-readme | none | ✓ |
 | 08-no-trigger-refactor | none | ✓ |
+
+All positive fixtures must cite every expected trigger listed. A skill that fires on only one trigger for a multi-trigger fixture is a short-circuit regression — treat it as a fail, not a pass.
 
 If any row disagrees with the criteria, stop and fix the skill or the criteria (whichever is wrong) before proceeding.
 

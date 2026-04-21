@@ -4,7 +4,7 @@ Ambient context loaded alongside CLAUDE.md. This is what a new team member needs
 
 ## What This Repository Is
 
-This is the complete Claude Code environment for Gavin Hensley — 34 reusable skills, 24 specialist agents, 10 path-scoped rules, 5 enforcement hooks, 5 slash commands, and persistent agent memory. It packages an entire AI assistant "brain" as portable, version-controlled infrastructure.
+This is the complete Claude Code environment for Gavin Hensley — 36 reusable skills, 24 specialist agents, 11 path-scoped rules, 5 enforcement hooks, 6 slash commands, and persistent agent memory. It packages an entire AI assistant "brain" as portable, version-controlled infrastructure.
 
 The system separates cleanly:
 - **This repo** — Skills, agents, commands, configuration (your AI assistant's rules and knowledge)
@@ -118,19 +118,22 @@ When dispatching, check if a skill covers it before creating a new agent session
 ## Directory Layout
 
 ```
-skills/              # 28 domains (each: SKILL.md + references/)
+skills/              # 36 domains (each: SKILL.md + optional references/)
 agents/              # 24 specialist agents (Markdown prompt format)
-commands/            # 5 slash commands (/improve, /plan, /review, /setup, /status)
+commands/            # 6 slash commands (/git-health-check, /improve, /plan, /review, /setup, /status)
+rules/               # 11 path-scoped rules (glob-activated domain instructions)
 agent-memory/        # Persistent learnings per agent
 evals/               # Test suite (4 tiers, 6 review challenges, orchestration script)
-improvements/        # Suggestions log for system enhancements
-plans/               # Saved execution plans
-config/              # settings.json (template), plugins.json, settings.local.json
-scripts/             # install.sh, validate.sh
-docs/                # IMPROVEMENTS.md, architecture decisions
-CLAUDE.md            # Global instructions (symlinked to ~/.claude/)
+improvements/        # Suggestions log for system enhancements (system/ subdir + README)
+coaching/            # Dated output from the weekly-claude-code-coach Cowork task
+templates/           # Starter templates for new skills / agents / commands
+config/              # settings.json (template), settings.local.json, hooks.json, plugins/plugins.json (21 tracked)
+scripts/             # install.sh, validate.sh, hooks/ (5 hooks: block-destructive, doc-drift-check, lint-on-save, verify-tests, warn-no-tests)
+docs/                # FAILURE-MODES, HANDOFF-PROTOCOLS, IMPROVEMENTS, PROJECT-IDEAS, REFERENCE-GAPS, SKILL-CHAINS, STATUS, claude-code-cowork-reference
+CLAUDE.md            # Global instructions (symlinked to ~/.claude/CLAUDE.md)
 CONTEXT.md           # This file
 README.md            # Project overview
+claude-code-cowork-research.md  # Research snapshot used for system design (mirrored at Projects/Research/)
 .gitignore           # Excludes secrets, caches, machine-specific state
 ```
 
