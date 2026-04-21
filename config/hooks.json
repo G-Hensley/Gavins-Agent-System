@@ -59,6 +59,18 @@
         "hooks": [
           {
             "type": "command",
+            "if": "Bash(git push *)",
+            "command": "'REPO_DIR/scripts/hooks/pr-push-nudge.sh'",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(gh pr create *)",
             "command": "'REPO_DIR/scripts/hooks/pr-push-nudge.sh'",
             "timeout": 5
           }

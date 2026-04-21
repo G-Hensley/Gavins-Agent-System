@@ -23,7 +23,7 @@ esac
 
 if [ "$fire" = "1" ]; then
   echo ""
-  echo "PR push detected. Copilot reviews typically land in ~60-90s."
+  echo "PR activity detected. Copilot reviews typically land in ~60-90s."
   echo "Run /pr-check when ready to triage comments, CI status, and merge state."
 fi
 
