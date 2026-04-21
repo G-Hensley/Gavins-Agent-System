@@ -66,10 +66,13 @@ Do NOT auto-skip bot comments. Copilot's bot output is the primary signal for th
 GitHub Copilot PR review usually fires once per push but can miss re-reviews. Attempt a retrigger:
 
 ```
-gh api -X POST repos/{owner}/{repo}/pulls/{pr}/requested_reviewers -f reviewers='["copilot-pull-request-reviewer"]' 2>/dev/null || true
+gh api -X POST repos/{owner}/{repo}/pulls/{pr}/requested_reviewers \
+  -f 'reviewers[]=copilot-pull-request-reviewer[bot]' 2>/dev/null || true
 ```
 
-If the API call fails (account doesn't have Copilot PR review, API shape changed, etc.), skip silently and tell the user they may need to click "Ask Copilot" in the PR UI.
+**Important:** the slug is `copilot-pull-request-reviewer[bot]` with the literal `[bot]` suffix. Plain `copilot-pull-request-reviewer` (no suffix) returns `422 not a collaborator`. Verified working on G-Hensley/gavins-agent-system PR #4 on 2026-04-21.
+
+If the API call fails (account doesn't have Copilot PR review enabled, slug changed, org policy blocks it), skip silently and tell the user they may need to click "Ask Copilot" in the PR UI.
 
 ### 7. Report
 
