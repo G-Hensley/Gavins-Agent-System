@@ -2,7 +2,7 @@
 # PostToolUse hook for Bash(git commit*) — checks if docs are drifting behind code.
 # Two checks, both fail-open:
 #   (1) warn after 3+ commits since any .md file was last modified
-#   (2) warn if commit touches structural paths (skills/|agents/|commands/|rules/|hooks/|config/)
+#   (2) warn if commit touches structural paths (skills/|agents/|commands/|rules/|scripts/hooks/|config/)
 #       and docs/STATUS.md "Last updated:" is >14 days old
 # Never blocks (exit 0 always).
 
@@ -35,7 +35,7 @@ fi
 # --- Check 2: STATUS.md staleness on structural commits ---
 if [ -f docs/STATUS.md ]; then
   STRUCTURAL_HIT=$(git log -1 --name-only --pretty= HEAD 2>/dev/null \
-    | grep -E '^(skills|agents|commands|rules|hooks|config)/' | head -5)
+    | grep -E '^(skills|agents|commands|rules|scripts/hooks|config)/' | head -5)
   if [ -n "$STRUCTURAL_HIT" ]; then
     STATUS_DATE=$(grep -m 1 '^Last updated:' docs/STATUS.md 2>/dev/null | awk '{print $NF}')
     if [ -n "$STATUS_DATE" ]; then
