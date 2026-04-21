@@ -15,7 +15,7 @@ Instead of scattering configuration across machines, this system is:
 ## Repository Structure
 
 ```
-skills/              # 36 reusable skills (each with SKILL.md + references/)
+skills/              # 36 reusable skills (each with SKILL.md and optional references/)
 agents/              # 24 specialist agents (prompts + configuration)
 commands/            # 6 slash commands (/git-health-check, /improve, /plan, /review, /setup, /status)
 rules/               # 11 path-scoped rules (glob-activated domain instructions)

@@ -34,11 +34,11 @@ If any fail: report the exact failure, offer to repair. Repair logic for the tra
 
 ### 3. Dangling locks
 
-`find .git -maxdepth 2 -name "*.lock" -type f`. Any `.lock` file older than 5 minutes is almost certainly a crashed writer. Check `fuser` / `lsof` to confirm no live process holds it, then offer to delete.
+`find .git -name "*.lock" -type f`. Any `.lock` file older than 5 minutes is almost certainly a crashed writer. Lock files can live anywhere under `.git/` (including deep paths like `.git/refs/remotes/origin/*.lock`), so do not cap `-maxdepth`. Check `fuser` / `lsof` to confirm no live process holds it, then offer to delete.
 
 ### 4. Stranded dependabot branches
 
-`ls -la .git/refs/heads/dependabot/**/` (if dir exists). Report the count + dates. Do not auto-delete — dependabot branches may have legitimate PRs associated. Instead, link to `https://github.com/<owner>/<repo>/network/updates` so the user can close them in the UI.
+`find .git/refs/heads/dependabot -type f 2>/dev/null` (if dir exists). Report the count + dates. Use `find` rather than a `**` glob — recursive globs require `shopt -s globstar` which isn't the default on many Bash setups. Do not auto-delete — dependabot branches may have legitimate PRs associated. Instead, link to `https://github.com/<owner>/<repo>/network/updates` so the user can close them in the UI.
 
 ### 5. Remote vs. local divergence sanity
 
