@@ -17,8 +17,37 @@ case "$COMMAND" in
   *) exit 0 ;;
 esac
 
-# Determine remote owner. No origin → nothing to check.
-REMOTE_URL=$(git remote get-url origin 2>/dev/null || echo "")
+# Determine the effective push remote. Priority:
+#   1. Explicit remote in the push command: `git push <remote> ...`
+#   2. branch.<current>.pushRemote (push-specific override)
+#   3. branch.<current>.remote (upstream)
+#   4. remote.pushDefault
+#   5. origin (last resort)
+PUSH_REMOTE=""
+# shellcheck disable=SC2206
+args=($COMMAND)
+seen_push=0
+for word in "${args[@]}"; do
+  if [ "$seen_push" = "1" ]; then
+    case "$word" in
+      -*) continue ;;                 # skip flags like -u, --force
+      *) PUSH_REMOTE="$word"; break ;;
+    esac
+  fi
+  [ "$word" = "push" ] && seen_push=1
+done
+
+if [ -z "$PUSH_REMOTE" ]; then
+  BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || echo "")
+  if [ -n "$BRANCH" ]; then
+    PUSH_REMOTE=$(git config --get "branch.$BRANCH.pushRemote" 2>/dev/null || echo "")
+    [ -z "$PUSH_REMOTE" ] && PUSH_REMOTE=$(git config --get "branch.$BRANCH.remote" 2>/dev/null || echo "")
+  fi
+  [ -z "$PUSH_REMOTE" ] && PUSH_REMOTE=$(git config --get remote.pushDefault 2>/dev/null || echo "")
+  [ -z "$PUSH_REMOTE" ] && PUSH_REMOTE="origin"
+fi
+
+REMOTE_URL=$(git remote get-url "$PUSH_REMOTE" 2>/dev/null || echo "")
 if [ -z "$REMOTE_URL" ]; then
   exit 0
 fi

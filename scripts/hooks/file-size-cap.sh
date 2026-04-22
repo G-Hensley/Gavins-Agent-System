@@ -6,7 +6,7 @@
 #   - .md files under skills/, agents/, rules/, commands/
 #   - .py / .ts / .tsx / .rs / .sh production code anywhere
 # Excludes:
-#   - docs/, coaching/, evals/, node_modules/, .venv/, .git/ (allowed long)
+#   - docs/, coaching/, evals/, agent-memory/, node_modules/, .venv/, .git/ (allowed long)
 set -uo pipefail
 
 INPUT=$(cat)
