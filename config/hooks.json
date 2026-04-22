@@ -12,6 +12,17 @@
         ]
       },
       {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(git push *)",
+            "command": "'REPO_DIR/scripts/hooks/gh-account-guard.sh'",
+            "timeout": 5
+          }
+        ]
+      },
+      {
         "matcher": "Edit|Write",
         "hooks": [
           {
@@ -40,6 +51,16 @@
             "type": "command",
             "command": "'REPO_DIR/scripts/hooks/lint-on-save.sh'",
             "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "'REPO_DIR/scripts/hooks/file-size-cap.sh'",
+            "timeout": 5
           }
         ]
       },

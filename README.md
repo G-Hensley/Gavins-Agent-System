@@ -4,7 +4,7 @@ A portable, version-controlled configuration of Claude Code skills, agents, comm
 
 ## What This Is
 
-This repository packages Gavin Hensley's complete Claude Code environment — 36 reusable skills, 24 specialist agents, 11 path-scoped rules, 6 enforcement hooks, 7 slash commands, persistent agent memory, and global Claude instructions. Everything is designed for API security, CLI tooling, backend/frontend development, and multi-agent automation.
+This repository packages Gavin Hensley's complete Claude Code environment — 36 reusable skills, 24 specialist agents, 12 path-scoped rules, 8 enforcement hooks, 7 slash commands, persistent agent memory, and global Claude instructions. Everything is designed for API security, CLI tooling, backend/frontend development, and multi-agent automation.
 
 Instead of scattering configuration across machines, this system is:
 - **Version-controlled** — Every skill, agent, and setting is in git. Review changes, rollback mistakes, share improvements.
@@ -18,7 +18,7 @@ Instead of scattering configuration across machines, this system is:
 skills/              # 36 reusable skills (each with SKILL.md and optional references/)
 agents/              # 24 specialist agents (prompts + configuration)
 commands/            # 7 slash commands (/git-health-check, /improve, /plan, /pr-check, /review, /setup, /status)
-rules/               # 11 path-scoped rules (glob-activated domain instructions)
+rules/               # 12 path-scoped rules (glob-activated domain instructions)
 agent-memory/        # Persistent learnings per agent (loaded per session)
 improvements/        # Backlog for skill/agent enhancements
 coaching/            # Dated Claude-authored coaching notes on the system (not synced)
@@ -30,7 +30,7 @@ config/              # Settings, plugin list, hooks template
 scripts/             # Tooling and automation
   install.sh         #   Deploy script — symlinks everything to ~/.claude/
   validate.sh        #   Validates repo structure (288 checks)
-  hooks/             #   6 enforcement hooks (lint, destructive cmd block, doc drift, pr-push nudge, etc.)
+  hooks/             #   8 enforcement hooks (lint, destructive cmd block, doc drift, pr-push nudge, file-size cap, gh-account guard, etc.)
 templates/           # Reusable project templates
   github-actions/    #   CI and Claude review workflow templates
 docs/                # Project documentation and roadmaps
