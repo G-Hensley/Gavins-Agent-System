@@ -30,7 +30,7 @@ This workstation runs Windows with Git Bash (MINGW64). These quirks bite repeate
 
 - **Encoding:** cp1252 is the default. Python / CLI tools emitting Unicode need `PYTHONIOENCODING=utf-8` (or equivalent). When writing files programmatically, open them with `encoding="utf-8"` explicitly.
 - **Symlinks:** Git Bash symlink creation silently falls back to file copies unless Developer Mode or an admin shell is active. After any install that creates symlinks, verify with `ls -la` that they're real links, not copies.
-- **Missing utilities:** `zip` is not installed by default. Use PowerShell `Compress-Archive -Path ... -DestinationPath ...` or `tar -czf`.
+- **Missing utilities:** `zip` is not installed by default. For `.zip` output, use PowerShell `Compress-Archive -Path ... -DestinationPath ...` or `tar -a -c -f archive.zip ...` (Windows bsdtar auto-detects format from extension). `tar -czf` makes `.tar.gz`, not `.zip` — don't confuse the two.
 - **Line endings:** CRLF is the default. `warning: LF will be replaced by CRLF the next time Git touches it` during `git add` is normal, not an error — don't "fix" it.
 - **Paths:** Forward slashes work in Git Bash. Prefer `/dev/null` over Windows `NUL` inside shell scripts.
 - **Shell:** Claude Code runs bash on this machine, not PowerShell. Assume bash syntax unless told otherwise.
