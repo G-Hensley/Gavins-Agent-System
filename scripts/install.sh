@@ -321,11 +321,12 @@ try:
 except Exception:
     sys.exit(1)
 " 2>/dev/null; then
-      echo "[DRY RUN] Skip: hooks already configured in settings.json"
+      echo "[DRY RUN] Would replace hooks in $SETTINGS_FILE (prev -> ${SETTINGS_FILE}.hooks.bak)"
     else
       echo "[DRY RUN] Would merge hooks from config/hooks.json into $SETTINGS_FILE"
-      echo "[DRY RUN] REPO_DIR placeholder would be replaced with: $REPO_DIR_NATIVE"
-      HOOKS_TEMPLATE_NATIVE="$HOOKS_TEMPLATE_NATIVE" REPO_DIR_NATIVE="$REPO_DIR_NATIVE" python3 -c "
+    fi
+    echo "[DRY RUN] REPO_DIR placeholder would be replaced with: $REPO_DIR_NATIVE"
+    HOOKS_TEMPLATE_NATIVE="$HOOKS_TEMPLATE_NATIVE" REPO_DIR_NATIVE="$REPO_DIR_NATIVE" python3 -c "
 import json, os
 with open(os.environ['HOOKS_TEMPLATE_NATIVE']) as f:
     raw = f.read()
@@ -336,7 +337,6 @@ for event, matchers in hooks['hooks'].items():
         for h in entry.get('hooks', []):
             print(f'[DRY RUN]   [{event}] matcher={entry[\"matcher\"]} cmd={h[\"command\"]}')
 " 2>/dev/null || echo "[DRY RUN]   (could not parse hooks template)"
-    fi
   else
     export REPO_DIR_PY="$REPO_DIR_NATIVE"
     export SETTINGS_FILE_PY="$SETTINGS_FILE_NATIVE"
@@ -362,8 +362,13 @@ except (FileNotFoundError, json.JSONDecodeError):
     settings = {}
 
 if 'hooks' in settings:
-    print('  Skipped: hooks already configured in settings.json')
-    sys.exit(0)
+    backup_path = settings_path + '.hooks.bak'
+    with open(backup_path, 'w') as f:
+        json.dump({'hooks': settings['hooks']}, f, indent=2)
+        f.write('\n')
+    action, note = 'Replaced', f' (prev -> {os.path.basename(backup_path)})'
+else:
+    action, note = 'Merged', ''
 
 settings['hooks'] = hooks_config['hooks']
 
@@ -371,7 +376,7 @@ with open(settings_path, 'w') as f:
     json.dump(settings, f, indent=2)
     f.write('\n')
 
-print('  Merged: hooks config into settings.json')
+print(f'  {action}: hooks config into settings.json{note}')
 PYEOF
     if [ $? -ne 0 ]; then
       echo "  Warning: failed to merge hooks into settings.json" >&2
