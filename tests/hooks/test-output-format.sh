@@ -112,6 +112,64 @@ assert_empty "doc-drift-check: non-commit command emits no stdout" "$out"
 out=$(cd "$GIT_REPO" && echo '{"tool_input":{"command":"git commit -m next"},"tool_result":{"exit_code":1}}' | bash "$HOOKS_DIR/doc-drift-check.sh")
 assert_empty "doc-drift-check: failed commit emits no stdout" "$out"
 
+# -----------------------------------------------------------------
+# pr-push-nudge tests
+# -----------------------------------------------------------------
+
+# gh pr create -> JSON (no external gh call needed for this path)
+out=$(echo '{"tool_input":{"command":"gh pr create --title x --body y"},"tool_result":{"exit_code":0}}' | bash "$HOOKS_DIR/pr-push-nudge.sh")
+assert_json_with_context "pr-push-nudge: gh pr create emits JSON additionalContext" "$out" "/pr-check"
+
+# Unrelated command -> empty stdout
+out=$(echo '{"tool_input":{"command":"ls"},"tool_result":{"exit_code":0}}' | bash "$HOOKS_DIR/pr-push-nudge.sh")
+assert_empty "pr-push-nudge: unrelated command emits no stdout" "$out"
+
+# Failed gh pr create -> empty stdout
+out=$(echo '{"tool_input":{"command":"gh pr create --title x"},"tool_result":{"exit_code":1}}' | bash "$HOOKS_DIR/pr-push-nudge.sh")
+assert_empty "pr-push-nudge: failed gh pr create emits no stdout" "$out"
+
+# -----------------------------------------------------------------
+# file-size-cap tests
+# -----------------------------------------------------------------
+
+# Synthesize a large .py file (>200 lines) -> JSON
+LARGE_PY="$TMP/large.py"
+yes 'pass' | head -250 > "$LARGE_PY"
+out=$(echo "{\"tool_input\":{\"file_path\":\"$LARGE_PY\"},\"tool_result\":{\"exit_code\":0}}" | bash "$HOOKS_DIR/file-size-cap.sh")
+assert_json_with_context "file-size-cap: 250-line .py emits JSON additionalContext" "$out" "lines"
+
+# Small .py file -> empty stdout
+SMALL_PY="$TMP/small.py"
+echo "x = 1" > "$SMALL_PY"
+out=$(echo "{\"tool_input\":{\"file_path\":\"$SMALL_PY\"},\"tool_result\":{\"exit_code\":0}}" | bash "$HOOKS_DIR/file-size-cap.sh")
+assert_empty "file-size-cap: small .py emits no stdout" "$out"
+
+# Large .md outside skills/agents/rules/commands -> empty stdout
+LARGE_MD="$TMP/large.md"
+yes 'line' | head -250 > "$LARGE_MD"
+out=$(echo "{\"tool_input\":{\"file_path\":\"$LARGE_MD\"},\"tool_result\":{\"exit_code\":0}}" | bash "$HOOKS_DIR/file-size-cap.sh")
+assert_empty "file-size-cap: large .md outside scoped dirs emits no stdout" "$out"
+
+# -----------------------------------------------------------------
+# verify-tests tests
+# -----------------------------------------------------------------
+
+# Failing pytest -> JSON
+out=$(echo '{"tool_input":{"command":"uv run pytest"},"tool_result":{"exit_code":1}}' | bash "$HOOKS_DIR/verify-tests.sh")
+assert_json_with_context "verify-tests: failing pytest emits JSON additionalContext" "$out" "exited with code 1"
+
+# Passing pytest -> empty stdout
+out=$(echo '{"tool_input":{"command":"uv run pytest"},"tool_result":{"exit_code":0}}' | bash "$HOOKS_DIR/verify-tests.sh")
+assert_empty "verify-tests: passing pytest emits no stdout" "$out"
+
+# Non-test command -> empty stdout
+out=$(echo '{"tool_input":{"command":"ls"},"tool_result":{"exit_code":0}}' | bash "$HOOKS_DIR/verify-tests.sh")
+assert_empty "verify-tests: non-test command emits no stdout" "$out"
+
+# Pytest with no exit_code, FAILED in stdout -> JSON
+out=$(echo '{"tool_input":{"command":"pytest"},"tool_result":{"stdout":"3 passed, 2 FAILED"}}' | bash "$HOOKS_DIR/verify-tests.sh")
+assert_json_with_context "verify-tests: pytest FAILED in stdout (no exit_code) emits JSON additionalContext" "$out" "appears to have failed"
+
 echo ""
 echo "Results: $PASS passed, $FAIL failed"
 [ "$FAIL" -eq 0 ]

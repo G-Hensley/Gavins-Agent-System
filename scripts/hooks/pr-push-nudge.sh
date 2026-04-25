@@ -29,9 +29,16 @@ case "$COMMAND" in
 esac
 
 if [ "$fire" = "1" ]; then
-  echo ""
-  echo "PR activity detected. Copilot reviews typically land in ~60-90s."
-  echo "Run /pr-check when ready to triage comments, CI status, and merge state."
+  ADDITIONAL_CONTEXT="PR activity detected. Copilot reviews typically land in ~60-90s.
+Run /pr-check when ready to triage comments, CI status, and merge state." python3 -c "
+import json, os
+print(json.dumps({
+    'hookSpecificOutput': {
+        'hookEventName': 'PostToolUse',
+        'additionalContext': os.environ['ADDITIONAL_CONTEXT'],
+    }
+}))
+"
 fi
 
 exit 0

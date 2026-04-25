@@ -27,17 +27,33 @@ if [[ -z "$EXIT_CODE" ]]; then
   STDERR="$(printf '%s' "$INPUT" | jq -r '.tool_result.stderr // empty' 2>/dev/null)"
   COMBINED="$STDOUT $STDERR"
   if printf '%s' "$COMBINED" | grep -qiE '\bFAILED\b|\bERROR\b|\bfailed\s+[0-9]+\b|[0-9]+\s+failed'; then
-    echo "WARNING: Test command appears to have failed."
-    echo "  Command: $COMMAND"
-    echo "  Fix failing tests before continuing."
+    ADDITIONAL_CONTEXT="WARNING: Test command appears to have failed.
+  Command: $COMMAND
+  Fix failing tests before continuing." python3 -c "
+import json, os
+print(json.dumps({
+    'hookSpecificOutput': {
+        'hookEventName': 'PostToolUse',
+        'additionalContext': os.environ['ADDITIONAL_CONTEXT'],
+    }
+}))
+"
   fi
   exit 0
 fi
 
 if [[ "$EXIT_CODE" != "0" ]]; then
-  echo "WARNING: Test command exited with code $EXIT_CODE."
-  echo "  Command: $COMMAND"
-  echo "  Fix failing tests before continuing."
+  ADDITIONAL_CONTEXT="WARNING: Test command exited with code $EXIT_CODE.
+  Command: $COMMAND
+  Fix failing tests before continuing." python3 -c "
+import json, os
+print(json.dumps({
+    'hookSpecificOutput': {
+        'hookEventName': 'PostToolUse',
+        'additionalContext': os.environ['ADDITIONAL_CONTEXT'],
+    }
+}))
+"
 fi
 
 exit 0
