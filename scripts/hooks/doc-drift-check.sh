@@ -23,6 +23,8 @@ if [ -n "$EXIT_CODE" ] && [ "$EXIT_CODE" != "0" ]; then
   exit 0
 fi
 
+WARNINGS=""
+
 # --- Check 1: generic doc drift (3+ commits since last .md change) ---
 LAST_DOC_COMMIT=$(git log -1 --format=%H -- '*.md' 2>/dev/null)
 if [ -n "$LAST_DOC_COMMIT" ]; then
@@ -30,12 +32,10 @@ if [ -n "$LAST_DOC_COMMIT" ]; then
   if [ "$COMMITS_SINCE" -ge 3 ]; then
     CHANGED_FILES=$(git diff --name-only "$LAST_DOC_COMMIT"..HEAD 2>/dev/null | grep -v '\.md$' | head -10)
     if [ -n "$CHANGED_FILES" ]; then
-      echo ""
-      echo "Doc drift warning: $COMMITS_SINCE commits since docs were last updated."
-      echo "Changed files since last doc update:"
-      echo "$CHANGED_FILES" | sed 's/^/  /'
-      echo ""
-      echo "Consider running /doc-sync to check for stale documentation."
+      WARNINGS+="Doc drift warning: $COMMITS_SINCE commits since docs were last updated."$'\n'
+      WARNINGS+="Changed files since last doc update:"$'\n'
+      WARNINGS+=$(echo "$CHANGED_FILES" | sed 's/^/  /')$'\n\n'
+      WARNINGS+="Consider running /doc-sync to check for stale documentation."$'\n'
     fi
   fi
 fi
@@ -59,17 +59,28 @@ except Exception:
         ''|*[!0-9]*) ;;
         *)
           if [ "$DAYS_OLD" -gt 14 ]; then
-            echo ""
-            echo "STATUS.md drift warning: structural change committed but docs/STATUS.md is $DAYS_OLD days old (Last updated: $STATUS_DATE)."
-            echo "Structural paths in this commit:"
-            echo "$STRUCTURAL_HIT" | sed 's/^/  /'
-            echo ""
-            echo "Fix: bump 'Last updated:' and add an Improvements Roadmap row. Run /doc-sync for full drift check."
+            [ -n "$WARNINGS" ] && WARNINGS+=$'\n'
+            WARNINGS+="STATUS.md drift warning: structural change committed but docs/STATUS.md is $DAYS_OLD days old (Last updated: $STATUS_DATE)."$'\n'
+            WARNINGS+="Structural paths in this commit:"$'\n'
+            WARNINGS+=$(echo "$STRUCTURAL_HIT" | sed 's/^/  /')$'\n\n'
+            WARNINGS+="Fix: bump 'Last updated:' and add an Improvements Roadmap row. Run /doc-sync for full drift check."$'\n'
           fi
           ;;
       esac
     fi
   fi
+fi
+
+if [ -n "$WARNINGS" ]; then
+  ADDITIONAL_CONTEXT="$WARNINGS" python3 -c "
+import json, os
+print(json.dumps({
+    'hookSpecificOutput': {
+        'hookEventName': 'PostToolUse',
+        'additionalContext': os.environ['ADDITIONAL_CONTEXT'],
+    }
+}))
+"
 fi
 
 exit 0
