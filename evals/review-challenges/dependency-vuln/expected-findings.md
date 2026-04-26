@@ -74,7 +74,7 @@ The reviewer should not flag any of the following as vulnerable. Each false posi
 |---|---|---|
 | requests | 2.31.0 | Safe |
 | pydantic | 2.5.3 | Safe |
-| python-dotenv | 1.0.0 | Safe |
+| python-dotenv | 1.2.2 | Safe |
 | uvicorn | 0.25.0 | Safe |
 
 ## Scoring Summary

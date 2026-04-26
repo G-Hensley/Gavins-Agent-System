@@ -31,7 +31,7 @@ A dual-stack API service (Node.js + Python) for document processing. The Node.js
 | `Jinja2` | 2.11.3 | Sandbox escape (CVE-2024-34064) | Medium | High |
 | `requests` | 2.31.0 | Safe control | N/A | None |
 | `pydantic` | 2.5.3 | Safe control | N/A | None |
-| `python-dotenv` | 1.0.0 | Safe control | N/A | None |
+| `python-dotenv` | 1.2.2 | Safe control | N/A | None |
 | `uvicorn` | 0.25.0 | Safe control | N/A | None |
 
 ## Scoring
