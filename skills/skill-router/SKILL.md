@@ -47,6 +47,7 @@ For each task, check this routing:
 **AI agents / chatbots / LLM / RAG / prompt engineering** → `ai-engineering`
 **Safety rules / hooks / "block this" / "warn me when"** → `hookify`
 **Starting a new project / setting up project context** → `project-scaffolding`
+**Cross-session task tracking / "what's next" / "where are we" / "track this"** → `task-tracking`
 **Creating or improving skills** → `skill-creator`
 
 ### Step 3: Lifecycle Skills
@@ -54,6 +55,7 @@ For each task, check this routing:
 These skills apply at phase transitions, not to domain work:
 
 **After brainstorming/planning, before coding** → `project-scaffolding` (creates project CLAUDE.md + CONTEXT.md)
+**At session start in any project with `docs/TASKS.md`** → `task-tracking` (load in-progress state from previous sessions)
 **After completing work, before claiming done** → `validation-and-verification` (evidence before claims)
 
 ### Step 4: Skills vs Agents

@@ -4,7 +4,7 @@ Ambient context loaded alongside CLAUDE.md. This is what a new team member needs
 
 ## What This Repository Is
 
-This is the complete Claude Code environment for Gavin Hensley — 36 reusable skills, 24 specialist agents, 12 path-scoped rules, 8 enforcement hooks, 7 slash commands, and persistent agent memory. It packages an entire AI assistant "brain" as portable, version-controlled infrastructure.
+This is the complete Claude Code environment for Gavin Hensley — 37 reusable skills, 24 specialist agents, 12 path-scoped rules, 8 enforcement hooks, 7 slash commands, and persistent agent memory. It packages an entire AI assistant "brain" as portable, version-controlled infrastructure.
 
 The system separates cleanly:
 - **This repo** — Skills, agents, commands, configuration (your AI assistant's rules and knowledge)
