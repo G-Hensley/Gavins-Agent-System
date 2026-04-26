@@ -1,67 +1,70 @@
 # Design Styles & Aesthetics
 
-When to reference: choosing a visual direction for a project, or when the user asks for a specific aesthetic.
+When to reference: choosing a visual direction for a project, matching a style to a brand or audience, or when the user asks for a specific aesthetic.
 
-## Minimalist
-Clean, simple, content-focused. Heavy whitespace, limited color palette (2-3 colors), sans-serif typography, flat design with no gradients or shadows.
-- **When**: SaaS dashboards, portfolios, documentation sites, developer tools
-- **Tailwind**: `bg-white text-gray-900`, generous `p-8 md:p-16`, `max-w-3xl mx-auto`
-- **Key**: every element must earn its place — if it doesn't serve hierarchy or function, remove it
+This file is the entry point. For deep-dive details on each style, see:
+- `design-tradition-styles.md` — graphic-design-history-rooted styles (Minimalist, Swiss, Editorial, Constructivism, Brutalism, Retro, Hand-Drawn, Flat, Bento)
+- `design-css-techniques.md` — CSS treatment styles (Glassmorphism, Neumorphism, Claymorphism, Material, Corporate, Dark Mode)
 
-## Glassmorphism
-Frosted glass effect with transparency, blur, and subtle borders. Layers content over vibrant backgrounds.
-- **When**: Modern apps, music players, dashboard overlays, hero sections
-- **CSS**: `backdrop-filter: blur(12px)`, semi-transparent backgrounds `bg-white/20`, subtle `border border-white/30`
-- **Tailwind**: `bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-xl`
-- **Tips**: needs a colorful or gradient background behind it to be effective. Ensure text contrast — white text on frosted panels needs enough opacity. Don't overuse — 1-2 glass panels per viewport.
+## How to Choose a Style
 
-## Neumorphism (Soft UI)
-Soft, extruded elements that appear to push out of or sink into the background. Uses subtle shadows on matching background colors.
-- **When**: Calculator UIs, settings panels, IoT dashboards, music controls
-- **CSS**: dual box-shadow — one light, one dark — on a matching background color
-- **Tailwind**: custom shadows in config: `shadow-[8px_8px_16px_#d1d1d1,-8px_-8px_16px_#ffffff]` on `bg-gray-200`
-- **Pitfalls**: poor accessibility — low contrast between elements and background. Always add focus rings and clear interactive states. Not suitable for text-heavy interfaces.
+Match the aesthetic to the audience, industry, and emotional tone — not personal preference. Ask three questions before choosing:
 
-## Claymorphism
-3D clay/plasticine aesthetic with rounded shapes, inner shadows, and pastel backgrounds. Playful and tactile.
-- **When**: Children's products, creative apps, onboarding flows, marketing landing pages
-- **CSS**: `border-radius: 24px+`, inner shadow + outer shadow, pastel color palette
-- **Tailwind**: `rounded-3xl bg-gradient-to-br from-pink-200 to-purple-200 shadow-xl` + custom inner shadow
-- **Tips**: works best with illustration, not photography. Keep text simple and large.
+1. **Who is the audience?** A developer-tools company and a children's brand need fundamentally different visual languages.
+2. **What emotion should the site evoke?** Trust? Excitement? Calm? Playfulness? Luxury?
+3. **What are the conventions of this industry?** Jakob's Law: users expect your site to work like the ones they already know. Breaking conventions should be intentional, not accidental.
 
-## Brutalism
-Raw, unpolished, anti-design aesthetic. Bold typography, harsh borders, stark colors, intentional "broken" layouts.
-- **When**: Creative portfolios, art galleries, counter-culture brands, experimental sites
-- **CSS**: thick `border-4 border-black`, monospace fonts, no border-radius, bright clashing colors
-- **Tailwind**: `border-4 border-black font-mono bg-yellow-300 text-black uppercase tracking-widest`
-- **Tips**: looks intentional only when every "rough" choice is deliberate. Random roughness looks like bugs.
+| Goal | Styles that work |
+|------|-----------------|
+| Trust & authority | Swiss, Corporate, Minimalist, Flat |
+| Innovation & energy | Constructivism, Brutalism, Glassmorphism |
+| Playfulness & warmth | Hand-Drawn, Claymorphism, Retro |
+| Luxury & premium | Minimalist + Dark Mode, Editorial, Swiss |
+| Technical & developer | Minimalist, Dark Mode, Monospace accents |
+| Creative & artistic | Brutalism, Editorial, Hand-Drawn |
+| Content-dense & organized | Bento, Flat, Corporate, Swiss |
+| Nostalgic & personality-driven | Retro, Hand-Drawn, Editorial |
 
-## Material Design
-Google's design language — elevation via shadows, bold colors, ripple animations, card-based layouts.
-- **When**: Android-adjacent apps, productivity tools, admin panels
-- **Key elements**: consistent shadow scale (elevation 1-5), 8dp grid, FAB buttons, drawer navigation
-- **Tailwind**: `shadow-sm` through `shadow-2xl` for elevation, `rounded-lg`, `transition-shadow hover:shadow-lg`
+## Mixing Rule
 
-## Corporate / Enterprise
-Professional, trustworthy, information-dense. Navy/gray palettes, data tables, sidebar navigation.
-- **When**: B2B SaaS, financial dashboards, healthcare portals, admin systems
-- **Key**: readability over flash. High information density but clear grouping. Consistent iconography.
-- **Tailwind**: `bg-slate-50 text-slate-800`, compact spacing `p-3 gap-2`, clear borders and dividers
+**Don't mix tradition styles.** Pick one direction and commit. Inconsistency reads as unfinished, not creative.
 
-## Dark Mode Design
-Not just inverting colors — requires its own design decisions.
-- **Background**: never pure black (`#000`). Use `gray-900` or `gray-950` for main, `gray-800` for elevated surfaces
-- **Text**: never pure white for body. Use `gray-100` for headings, `gray-300` for body, `gray-500` for muted
-- **Elevation**: lighter = higher (reverse of light mode). Elevated cards are `gray-800` on `gray-900` background
-- **Accents**: reduce saturation slightly — vivid colors vibrate against dark backgrounds
-- **Tailwind**: use `dark:` prefix systematically. Define dark palette in config.
+**Exception:** you can layer a CSS technique (glassmorphism, neumorphism, dark mode) onto a tradition style (minimalist, Swiss, editorial) since they operate at different levels — philosophy vs. surface treatment.
 
-## Choosing a Style
-Match the aesthetic to the audience and purpose:
-- **Trust & authority**: corporate, material, minimalist
-- **Innovation & creativity**: glassmorphism, brutalism, asymmetric
-- **Playfulness & warmth**: claymorphism, bold colors, rounded shapes
-- **Technical & developer**: minimalist, dark mode, monospace accents
-- **Luxury & premium**: minimalist + dark mode, generous whitespace, serif headings
+## Choosing Between Similar Styles
 
-Don't mix styles. Pick one direction and commit — inconsistency reads as unfinished, not creative.
+| Comparison | Key difference |
+|---|---|
+| Minimalist vs. Swiss | Minimalism strips away; Swiss adds structured complexity through grids and typography |
+| Minimalist vs. Flat | Minimalism is a philosophy (less is more); Flat is a technique (no depth effects). Flat can be busy; minimalism can't. |
+| Brutalism vs. Constructivism | Brutalism provokes through chaos; Constructivism channels energy through structured asymmetry. |
+| Editorial vs. Swiss | Editorial is decorative and layered; Swiss is clean and grid-pure. |
+| Bento vs. Corporate | Bento uses modular tiles with visual variety; Corporate uses tables, lists, uniform spacing. |
+| Retro vs. Hand-Drawn | Retro references specific past decades; Hand-Drawn references handmade craft without an era. |
+| Glassmorphism vs. Neumorphism | Glass is transparent over color; Neumorphism is opaque, extruded from a matching surface. |
+| Flat vs. Material | Material is Google's evolution of Flat — adds shadow-based elevation and prescribed motion. |
+
+## Combinations That Work
+
+- **Minimalist + Glassmorphism** — clean layout with frosted cards over a gradient hero
+- **Swiss + Dark Mode** — precision grid typography on dark surfaces. Premium tech aesthetic.
+- **Editorial + Retro** — magazine layout with vintage typography and muted palette
+- **Corporate + Flat** — information-dense dashboard with flat, shadow-free components
+- **Bento + Neumorphism** — tile grid with soft extruded panels (subtle, not for text-heavy tiles)
+- **Minimalist + Dark Mode** — the default "premium tech" look. Generous space + restrained accent.
+
+## Combinations That Clash
+
+- **Brutalism + Corporate** — chaos undermines trust signals
+- **Claymorphism + Swiss** — playful 3D clay conflicts with precision
+- **Hand-Drawn + Material** — Google's structured system conflicts with organic imperfection
+- **Neumorphism + Editorial** — soft shadows disappear in content-dense layouts
+- **Retro + Glassmorphism** — frosted glass is modern; breaks vintage immersion
+
+## Quick Selection Workflow
+
+1. Brief audit — write 3 adjectives the brand should evoke (e.g., *trustworthy / fast / serious*)
+2. Cross-reference with the **Goal** table above
+3. Pick **one** tradition style as the foundation
+4. Optionally layer **one** CSS technique on top
+5. Validate: pull up 2-3 reference sites in that style — does the brand fit there?
