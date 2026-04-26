@@ -1,7 +1,7 @@
 ---
 name: pr-check
 description: Full PR review cycle — fetch comments (including Copilot bot reviews), check CI status and merge state, verify each flagged issue still reproduces before fixing, commit in thematic clusters, push, and optionally retrigger Copilot. Use when the user says "pr check", "review pr comments", "address review feedback", or after Copilot / a human reviewer has posted on a PR.
-last_verified: 2026-04-21
+last_verified: 2026-04-26
 disable-model-invocation: true
 argument-hint: "[pr-number]"
 allowed-tools: [Read, Write, Edit, Bash, Grep, Glob]
@@ -91,6 +91,19 @@ End with:
 
 If anything is in **Awaiting user** or **CI status is red**, stop there — do not declare success.
 
+### 8. After merge — handoff
+
+When the PR has merged (state = `MERGED`), don't stop at the report. Two handoff actions:
+
+1. **Update `docs/TASKS.md`** if the task this PR closed isn't already in `Done`. Per the `task-tracking` skill, move it from `In Progress` (or `Backlog`) to `Done` with the merged PR number.
+2. **Decide what's next** by consulting the `project-orchestration` skill. The right next move depends on where the merged PR sits in the pipeline:
+   - More tasks left in the current phase → continue the build loop (`subagent-driven-development`)
+   - Phase complete → check the next phase's gating condition; dispatch the appropriate agent (e.g., `qa-engineer`, `devops-engineer`, `doc-writer`)
+   - All phases done → `git-workflow` Phase 3 for release tagging
+   - Re-dispatch `project-manager` for a status sweep at any phase boundary
+
+If the operator hasn't said which way to go, surface the options and ask. Don't auto-advance.
+
 ## What NOT to Do
 
 - Do not skip comments from bot authors. Copilot and Dependabot bot output are in scope.
@@ -108,4 +121,6 @@ Short, scannable. No narration of every file read. Report the table + summary bl
 
 - `validation-and-verification` skill — the "evidence before assertions" gate that step 4's verification pass implements.
 - `git-workflow` skill — references/quick-commands.md has the commit / push patterns.
+- `task-tracking` skill — step 8 references it for the post-merge `docs/TASKS.md` status move.
+- `project-orchestration` skill — step 8 consults it to decide the next move after merge.
 - `commit-push-pr` from the `commit-commands` plugin — overlapping territory for the happy-path "commit and open PR" flow. This skill is about the *post-PR review* cycle, not PR creation. (Note: `commit-commands` is a plugin, not a local `skills/` entry — don't look for it under `skills/commit-commands/`.)
