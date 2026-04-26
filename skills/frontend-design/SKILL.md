@@ -61,7 +61,9 @@ Read the relevant references before any UI work. Each is focused and < 200 lines
 
 ### Foundations
 - `references/design-principles.md` — Core principles summary: hierarchy, whitespace, responsive, components, accessibility
-- `references/design-styles.md` — Visual aesthetics: minimalist, glassmorphism, neumorphism, claymorphism, brutalism, material, corporate, dark mode
+- `references/design-styles.md` — Style selection: how to choose, similar-style comparisons, combinations that work / clash. Entry point for the two style-detail files below.
+- `references/design-tradition-styles.md` — Tradition styles (foundation): Minimalist, Swiss, Editorial, Constructivism, Brutalism/Neobrutalism, Retro, Hand-Drawn, Flat, Bento
+- `references/design-css-techniques.md` — CSS technique styles (surface): Glassmorphism, Neumorphism, Claymorphism, Material, Corporate, Dark Mode
 - `references/typography.md` — Font families, pairing, type scales, readability, line height, responsive typography
 - `references/color-theory.md` — Color psychology, palette types, 60-30-10 rule, contrast, accessibility
 - `references/layout-principles.md` — Alignment, grids, proximity, balance, repetition, whitespace, responsive patterns
