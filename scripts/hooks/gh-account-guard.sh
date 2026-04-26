@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
-# PreToolUse hook for Bash — blocks `git push` when pushing to a G-Hensley-
-# owned remote while the active GH account is not G-Hensley. Prevents the
-# wrong-account push failure mode called out in CLAUDE.md Git Workflow.
+# PreToolUse hook for Bash — blocks `git push` when pushing to a remote owned
+# by the configured GitHub account while the active GH account is different.
+# Prevents the wrong-account push failure mode.
+#
+# Configuration (in priority order):
+#   1. GH_ACCOUNT_GUARD_USER env var
+#   2. USERNAME=... in the file at GH_ACCOUNT_GUARD_CONFIG
+#      (default: ~/.claude/gh-account-guard.conf)
+#   3. No-op if neither is set — hook silently allows.
 #
 # Exits:
 #   0 = allow
@@ -16,6 +22,24 @@ case "$COMMAND" in
   *"git push"*) ;;
   *) exit 0 ;;
 esac
+
+# Resolve the configured GitHub username. Env var takes priority; config file
+# is the fallback. Hook is a no-op if neither is set.
+TARGET_DISPLAY="${GH_ACCOUNT_GUARD_USER:-}"
+if [ -z "$TARGET_DISPLAY" ]; then
+  CONFIG_FILE="${GH_ACCOUNT_GUARD_CONFIG:-$HOME/.claude/gh-account-guard.conf}"
+  if [ -f "$CONFIG_FILE" ]; then
+    # Read USERNAME=... from the config file. Use grep+cut so we don't have
+    # to source the file (avoids accidental code execution from the config).
+    TARGET_DISPLAY=$(grep -E '^USERNAME=' "$CONFIG_FILE" 2>/dev/null | head -1 | cut -d'=' -f2- | tr -d '"' | tr -d "'" | xargs)
+  fi
+fi
+
+if [ -z "$TARGET_DISPLAY" ]; then
+  exit 0
+fi
+
+TARGET_LOWER=$(echo "$TARGET_DISPLAY" | tr '[:upper:]' '[:lower:]')
 
 # Determine the effective push remote. Priority:
 #   1. Explicit remote in the push command: `git push <remote> ...`
@@ -70,16 +94,14 @@ if [ -z "$REMOTE_URL" ]; then
 fi
 
 # GitHub usernames are case-insensitive; remote URLs and auth logins can use
-# either case. Compare everything in lowercase. Keep a display-case version
-# for user-facing messages.
-TARGET_LOWER="g-hensley"
-TARGET_DISPLAY="G-Hensley"
+# either case. Compare everything in lowercase. The display-case version
+# (TARGET_DISPLAY) was already resolved above for user-facing messages.
 
 REMOTE_OWNER=$(echo "$REMOTE_URL" | sed -E 's|.*[:/]([^/]+)/[^/]+(\.git)?$|\1|')
 REMOTE_OWNER_LOWER=$(echo "$REMOTE_OWNER" | tr '[:upper:]' '[:lower:]')
 
-# Only enforce for G-Hensley repos — other owners (APIsec, Tampertantrum, etc.)
-# might legitimately use a different active account.
+# Only enforce for the configured user's repos — other owners might
+# legitimately use a different active account.
 if [ "$REMOTE_OWNER_LOWER" != "$TARGET_LOWER" ]; then
   exit 0
 fi

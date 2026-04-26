@@ -1,0 +1,15 @@
+# gh-account-guard configuration
+#
+# Copy this file to ~/.claude/gh-account-guard.conf and replace the value
+# below with your GitHub username.
+#
+# When set, the gh-account-guard PreToolUse hook blocks `git push` to repos
+# owned by USERNAME if the active gh CLI account is different — preventing
+# the wrong-account push failure mode.
+#
+# If this file is absent OR USERNAME is empty, the hook is a no-op.
+#
+# Alternative: set GH_ACCOUNT_GUARD_USER as an environment variable in your
+# shell profile. The env var takes priority over this file.
+
+USERNAME=your-github-username

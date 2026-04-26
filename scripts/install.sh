@@ -31,6 +31,7 @@ SETTINGS_FILE_NATIVE="$(to_native_path "$SETTINGS_FILE")"
 
 DRY_RUN=false
 VERIFY=false
+CHECK_PREREQS_ONLY=false
 
 # ---------------------------------------------------------------------------
 # Flag parsing
@@ -43,14 +44,19 @@ Install the Claude Code Agent System by symlinking skills, agents, commands,
 and config into ~/.claude/.
 
 Options:
-  --dry-run   Show what would be symlinked/copied without making any changes.
-              Each action is prefixed with [DRY RUN].
-  --verify    Check that all expected symlinks exist, point to the correct
-              targets, and that those targets actually exist on disk.
-              Exits 0 if everything is intact, 1 if anything is broken.
-  --help      Show this help text and exit.
+  --dry-run         Show what would be symlinked/copied without making any
+                    changes. Each action is prefixed with [DRY RUN].
+  --verify          Check that all expected symlinks exist, point to the
+                    correct targets, and that those targets actually exist
+                    on disk. Exits 0 if everything is intact, 1 if anything
+                    is broken.
+  --check-prereqs   Probe for required and optional tools used by install.sh
+                    and the hooks. Exits 0 if all required tools are present,
+                    1 if anything required is missing. Optional tools just
+                    print a notice.
+  --help            Show this help text and exit.
 
-Default (no flags): perform the full install.
+Default (no flags): runs prereq check, then performs the full install.
 EOF
 }
 
@@ -64,6 +70,10 @@ while [[ $# -gt 0 ]]; do
       VERIFY=true
       shift
       ;;
+    --check-prereqs)
+      CHECK_PREREQS_ONLY=true
+      shift
+      ;;
     --help|-h)
       usage
       exit 0
@@ -75,6 +85,61 @@ while [[ $# -gt 0 ]]; do
       ;;
   esac
 done
+
+# ---------------------------------------------------------------------------
+# Prerequisite check
+# ---------------------------------------------------------------------------
+# Required tools: install.sh and the hooks all rely on these.
+# Optional tools: hooks degrade silently if missing, but the system is more
+# useful with them.
+check_prereqs() {
+  local missing_required=0
+  local missing_optional=0
+
+  echo "Checking prerequisites..."
+  echo ""
+  echo "Required:"
+  for tool in bash python3 git gh jq claude; do
+    if command -v "$tool" >/dev/null 2>&1; then
+      echo "  [OK]      $tool"
+    else
+      echo "  [MISSING] $tool"
+      missing_required=$((missing_required + 1))
+    fi
+  done
+
+  echo ""
+  echo "Optional (hooks degrade silently if missing):"
+  for tool in ruff uv pnpm; do
+    if command -v "$tool" >/dev/null 2>&1; then
+      echo "  [OK]   $tool"
+    else
+      echo "  [SKIP] $tool"
+      missing_optional=$((missing_optional + 1))
+    fi
+  done
+
+  echo ""
+  if [ "$missing_required" -gt 0 ]; then
+    echo "$missing_required required tool(s) missing. Install them before proceeding:"
+    echo "  bash, python3, git, gh, jq, claude (Claude Code CLI)"
+    return 1
+  fi
+
+  if [ "$missing_optional" -gt 0 ]; then
+    echo "$missing_optional optional tool(s) missing. Install when convenient:"
+    echo "  ruff (uv tool install ruff) — needed by lint-on-save hook"
+    echo "  uv  (https://github.com/astral-sh/uv) — referenced by Python skills"
+    echo "  pnpm (https://pnpm.io/installation) — referenced by TS skills"
+  fi
+
+  return 0
+}
+
+if $CHECK_PREREQS_ONLY; then
+  check_prereqs
+  exit $?
+fi
 
 # ---------------------------------------------------------------------------
 # Portable directories to sync
@@ -151,6 +216,16 @@ if $VERIFY; then
     exit 1
   fi
 fi
+
+# ---------------------------------------------------------------------------
+# Preflight: required tools must be present before we touch anything
+# ---------------------------------------------------------------------------
+if ! check_prereqs; then
+  echo ""
+  echo "Aborting install — required tools missing." >&2
+  exit 1
+fi
+echo ""
 
 # ---------------------------------------------------------------------------
 # Preflight: can we actually create symlinks on this host?
@@ -270,6 +345,25 @@ else
     echo "  Copied: settings.json (template — edit machine-specific paths)"
   else
     echo "  Skipped: settings.json (already exists, contains machine-specific config)"
+  fi
+fi
+
+# gh-account-guard.conf — ship the example next to ~/.claude/ so the user can
+# rename + edit it to enable the hook. Never overwrite a real conf.
+GUARD_EXAMPLE_SRC="$REPO_DIR/config/gh-account-guard.conf.example"
+GUARD_EXAMPLE_DST="$CLAUDE_DIR/gh-account-guard.conf.example"
+if [ -f "$GUARD_EXAMPLE_SRC" ]; then
+  if $DRY_RUN; then
+    echo "[DRY RUN] Copy: $GUARD_EXAMPLE_SRC -> $GUARD_EXAMPLE_DST"
+    if [ ! -f "$CLAUDE_DIR/gh-account-guard.conf" ]; then
+      echo "[DRY RUN] Notice: rename to gh-account-guard.conf and set USERNAME to enable the hook"
+    fi
+  else
+    cp "$GUARD_EXAMPLE_SRC" "$GUARD_EXAMPLE_DST"
+    echo "  Copied: gh-account-guard.conf.example"
+    if [ ! -f "$CLAUDE_DIR/gh-account-guard.conf" ]; then
+      echo "    -> rename to gh-account-guard.conf and set USERNAME to enable the hook"
+    fi
   fi
 fi
 

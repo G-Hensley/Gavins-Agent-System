@@ -46,26 +46,52 @@ README.md            # This file
 ## Quick Start
 
 ### Prerequisites
-- Claude CLI installed (`brew install anthropics-ai/claude/claude` on macOS)
-- `~/.claude/` directory (created automatically if missing)
-- Bash 3.2+
+
+Required (install before running install.sh):
+- `bash` 3.2+
+- `python3` (used by install.sh and several hooks)
+- `git`
+- `gh` (GitHub CLI)
+- `jq`
+- `claude` (Claude Code CLI — `brew install anthropics-ai/claude/claude` on macOS)
+
+Optional (hooks degrade silently if missing):
+- `ruff` (used by `lint-on-save` hook — `uv tool install ruff`)
+- `uv` (referenced by Python skills)
+- `pnpm` (referenced by TS skills)
+
+Run `./scripts/install.sh --check-prereqs` to probe for these without installing anything.
 
 ### Install
 
 ```bash
-git clone https://github.com/G-Hensley/Gavins-Agent-System.git
-cd Gavins-Agent-System
+# Clone your fork (replace <your-username> with your GitHub username)
+git clone https://github.com/<your-username>/gavins-agent-system.git
+cd gavins-agent-system
 ./scripts/install.sh
 ```
 
 The script will:
-1. Create `~/.claude/` if it doesn't exist
-2. Symlink `skills/`, `agents/`, `commands/`, `rules/`, `improvements/`, `agent-memory/` to `~/.claude/`
-3. Symlink `CLAUDE.md` and `settings.local.json`
-4. Copy `settings.json` as a template (so you can customize machine-specific permissions)
-5. Install plugins listed in `plugins/plugins.json` (if claude CLI is available)
+1. Run a prerequisite check (aborts if required tools are missing)
+2. Create `~/.claude/` if it doesn't exist
+3. Symlink `skills/`, `agents/`, `commands/`, `rules/`, `improvements/`, `agent-memory/` to `~/.claude/`
+4. Symlink `CLAUDE.md` and `settings.local.json`
+5. Copy `settings.json` as a template (so you can customize machine-specific permissions)
+6. Copy `gh-account-guard.conf.example` to `~/.claude/` (rename + edit to enable the account-guard hook)
+7. Install plugins listed in `plugins/plugins.json` (if claude CLI is available)
 
 Backups are created as `.bak` files if existing files are replaced.
+
+### Enable gh-account-guard (optional)
+
+If you have multiple GitHub accounts and want to prevent pushing with the wrong one:
+
+```bash
+mv ~/.claude/gh-account-guard.conf.example ~/.claude/gh-account-guard.conf
+# edit ~/.claude/gh-account-guard.conf and set USERNAME=<your-github-username>
+```
+
+The hook then blocks `git push` to repos owned by USERNAME if the active gh CLI account is different. Without this file, the hook is a no-op.
 
 ### Verify
 

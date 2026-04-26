@@ -55,7 +55,7 @@ Do NOT auto-skip bot comments. Copilot's bot output is the primary signal for th
 
 ### 5. Commit and push
 
-- Verify active GitHub account: `gh auth status` must show `G-Hensley` active (not `Gavin-Hensley`).
+- Verify active GitHub account: `gh auth status` must show the account configured in `~/.claude/gh-account-guard.conf` (USERNAME=...). The `gh-account-guard` PreToolUse hook will block the push otherwise.
 - Stage only files changed to resolve this cluster.
 - Commit per theme with `type(scope): description` format. One logical change per commit, per the repo's commit rule.
 - Never include SQL keywords like DROP TABLE in commit messages (security hook blocks it).
