@@ -4,7 +4,7 @@ Ambient context loaded alongside CLAUDE.md. This is what a new team member needs
 
 ## What This Repository Is
 
-This is the complete Claude Code environment for Gavin Hensley — 38 reusable skills, 25 specialist agents, 12 path-scoped rules, 8 enforcement hooks, 7 slash commands, and persistent agent memory. It packages an entire AI assistant "brain" as portable, version-controlled infrastructure.
+This is the complete Claude Code environment for Gavin Hensley — 39 reusable skills, 25 specialist agents, 12 path-scoped rules, 8 enforcement hooks, 8 slash commands, and persistent agent memory. It packages an entire AI assistant "brain" as portable, version-controlled infrastructure.
 
 The system separates cleanly:
 - **This repo** — Skills, agents, commands, configuration (your AI assistant's rules and knowledge)
@@ -118,9 +118,9 @@ When dispatching, check if a skill covers it before creating a new agent session
 ## Directory Layout
 
 ```
-skills/              # 36 domains (each: SKILL.md + optional references/)
+skills/              # 39 domains (each: SKILL.md + optional references/)
 agents/              # 25 specialist agents (Markdown prompt format)
-commands/            # 7 slash commands (/git-health-check, /improve, /plan, /pr-check, /review, /setup, /status)
+commands/            # 8 slash commands (/build-prompt, /git-health-check, /improve, /plan, /pr-check, /review, /setup, /status)
 rules/               # 12 path-scoped rules (glob-activated domain instructions)
 agent-memory/        # Persistent learnings per agent
 evals/               # Test suite (4 tiers, 6 review challenges, orchestration script)

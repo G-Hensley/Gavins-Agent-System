@@ -4,7 +4,7 @@ A portable, version-controlled configuration of Claude Code skills, agents, comm
 
 ## What This Is
 
-This repository packages Gavin Hensley's complete Claude Code environment — 38 reusable skills, 25 specialist agents, 12 path-scoped rules, 8 enforcement hooks, 7 slash commands, persistent agent memory, and global Claude instructions. Everything is designed for API security, CLI tooling, backend/frontend development, and multi-agent automation.
+This repository packages Gavin Hensley's complete Claude Code environment — 39 reusable skills, 25 specialist agents, 12 path-scoped rules, 8 enforcement hooks, 8 slash commands, persistent agent memory, and global Claude instructions. Everything is designed for API security, CLI tooling, backend/frontend development, and multi-agent automation.
 
 Instead of scattering configuration across machines, this system is:
 - **Version-controlled** — Every skill, agent, and setting is in git. Review changes, rollback mistakes, share improvements.
@@ -15,9 +15,9 @@ Instead of scattering configuration across machines, this system is:
 ## Repository Structure
 
 ```
-skills/              # 38 reusable skills (each with SKILL.md and optional references/)
+skills/              # 39 reusable skills (each with SKILL.md and optional references/)
 agents/              # 25 specialist agents (prompts + configuration)
-commands/            # 7 slash commands (/git-health-check, /improve, /plan, /pr-check, /review, /setup, /status)
+commands/            # 8 slash commands (/build-prompt, /git-health-check, /improve, /plan, /pr-check, /review, /setup, /status)
 rules/               # 12 path-scoped rules (glob-activated domain instructions)
 agent-memory/        # Persistent learnings per agent (loaded per session)
 improvements/        # Backlog for skill/agent enhancements
@@ -98,8 +98,8 @@ The hook then blocks `git push` to repos owned by USERNAME if the active gh CLI 
 After install, your Claude Code sessions will load these skills and agents automatically. Check:
 
 ```bash
-ls -la ~/.claude/skills      # Should see 36 skill directories
-ls -la ~/.claude/agents      # Should see 24 agent definitions
+ls -la ~/.claude/skills      # Should see 39 skill directories
+ls -la ~/.claude/agents      # Should see 25 agent definitions
 claude skill list            # See available skills
 ```
 
