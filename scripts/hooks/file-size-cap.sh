@@ -52,11 +52,18 @@ LINES=$(wc -l < "$FILE_PATH" 2>/dev/null | tr -d ' ')
 if [ -z "$LINES" ]; then exit 0; fi
 
 if [ "$LINES" -gt 200 ]; then
-  echo ""
-  echo "File-size warning: $FILE_PATH is $LINES lines (>200)."
-  echo "Per CLAUDE.md Code Standards, keep .md files under skills/, agents/, rules/, and commands/"
-  echo "— plus .py / .ts / .tsx / .rs / .sh production code anywhere — under 200 lines."
-  echo "If this file is doing too much, split the documentation or refactor the code into smaller units."
+  ADDITIONAL_CONTEXT="File-size warning: $FILE_PATH is $LINES lines (>200).
+Per CLAUDE.md Code Standards, keep .md files under skills/, agents/, rules/, and commands/
+— plus .py / .ts / .tsx / .rs / .sh production code anywhere — under 200 lines.
+If this file is doing too much, split the documentation or refactor the code into smaller units." python3 -c "
+import json, os
+print(json.dumps({
+    'hookSpecificOutput': {
+        'hookEventName': 'PostToolUse',
+        'additionalContext': os.environ['ADDITIONAL_CONTEXT'],
+    }
+}))
+"
 fi
 
 exit 0
