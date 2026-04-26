@@ -30,12 +30,13 @@ For format, archive policy, and TodoWrite pairing, see the `task-tracking` skill
 - [ ] [TASK-4] Eval freshness — re-run Tier 2 + Tier 4
   - notes: evals dated 2026-04-03/04. Lots has shipped since: rules, hooks (JSON channel), genericization, orchestration skills, project-manager agent. Re-run before claiming system-stable. See `evals/run-eval.sh`.
 
-- [ ] [TASK-6] `pr-check` skill should reference `project-orchestration` in its after-merge handoff
-  - notes: small follow-up to PR #17. After merging, the natural next move depends on whether more tasks remain in the plan — point at `project-orchestration` for that decision.
-
 ## Done
 
 <!-- Most recent at the top. When this section exceeds ~30 entries, archive the oldest to docs/TASKS.archive.md. -->
+
+- [x] [TASK-6] `pr-check` skill references `project-orchestration` in its after-merge handoff
+  - closed via #22 (2026-04-26)
+  - notes: PR #21 originally authored this work but merged into its parent branch (`feat/project-scaffolding-bootstrap-tasks-md`) instead of `main` due to a stacked-PR mishap. Re-landed on `main` via #22.
 
 - [x] [TASK-5] Have `project-scaffolding` call `task-tracking:bootstrap` on new projects
   - closed via #19 (2026-04-26)
