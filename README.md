@@ -1,4 +1,37 @@
-# Claude Code Agent System
+<p align="center">
+  <img alt="Hexodus — cyberpunk agent kit for Claude Code" src="assets/hexodus-banner.svg" width="740">
+</p>
+
+<details>
+<summary>Plain-text banner (terminal / no-color fallback)</summary>
+
+```
+         ⬡          ⬡          ⬡          ⬡          ⬡
+
+ ██╗  ██╗███████╗██╗  ██╗ ██████╗ ██████╗ ██╗   ██╗███████╗
+ ██║  ██║██╔════╝╚██╗██╔╝██╔═══██╗██╔══██╗██║   ██║██╔════╝
+ ███████║█████╗   ╚███╔╝ ██║   ██║██║  ██║██║   ██║███████╗
+ ██╔══██║██╔══╝   ██╔██╗ ██║   ██║██║  ██║██║   ██║╚════██║
+ ██║  ██║███████╗██╔╝ ██╗╚██████╔╝██████╔╝╚██████╔╝███████║
+ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝ ╚══════╝
+
+         ⬡          ⬡          ⬡          ⬡          ⬡
+
+  ┌─[ status ]───────────────────────────────────────────┐
+  │                                                      │
+  │   skills 39  ◉  agents 25  ◉  memory 54             │
+  │   hooks   9  ◉  rules  12  ◉  build  0xFF006E       │
+  │                                                      │
+  │   > boot. dispatch. exit through hex.                │
+  │                                                      │
+  └──────────────────────────────────────────────────────┘
+```
+
+</details>
+
+# Hexodus
+
+> Cyberpunk agent kit for Claude Code — skills, specialists, persistent memory, and enforcement hooks. Boot. Dispatch. Exit through hex.
 
 A portable, version-controlled configuration of Claude Code skills, agents, commands, and settings. Clone it, run the install script, and deploy your full AI assistant infrastructure to any machine.
 

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 460" font-family="'JetBrains Mono','Fira Code','Cascadia Code','SF Mono',Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14">
+  <defs>
+    <linearGradient id="hexodusBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1A0033"/>
+      <stop offset="60%" stop-color="#0A0014"/>
+      <stop offset="100%" stop-color="#05000F"/>
+    </linearGradient>
+    <filter id="neonGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="1.2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="cyanGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="0.8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="740" height="460" fill="url(#hexodusBg)"/>
+
+  <!-- top hex glyphs (cyan, dispatched agents) -->
+  <text x="40" y="50" fill="#00F5FF" filter="url(#cyanGlow)" xml:space="preserve">         ⬡          ⬡          ⬡          ⬡          ⬡</text>
+
+  <!-- HEXODUS block letters (magenta with neon glow) -->
+  <g fill="#FF006E" filter="url(#neonGlow)">
+    <text x="40" y="92"  xml:space="preserve">██╗  ██╗███████╗██╗  ██╗ ██████╗ ██████╗ ██╗   ██╗███████╗</text>
+    <text x="40" y="106" xml:space="preserve">██║  ██║██╔════╝╚██╗██╔╝██╔═══██╗██╔══██╗██║   ██║██╔════╝</text>
+    <text x="40" y="120" xml:space="preserve">███████║█████╗   ╚███╔╝ ██║   ██║██║  ██║██║   ██║███████╗</text>
+    <text x="40" y="134" xml:space="preserve">██╔══██║██╔══╝   ██╔██╗ ██║   ██║██║  ██║██║   ██║╚════██║</text>
+    <text x="40" y="148" xml:space="preserve">██║  ██║███████╗██╔╝ ██╗╚██████╔╝██████╔╝╚██████╔╝███████║</text>
+    <text x="40" y="162" xml:space="preserve">╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝ ╚══════╝</text>
+  </g>
+
+  <!-- bottom hex glyphs (cyan) -->
+  <text x="40" y="200" fill="#00F5FF" filter="url(#cyanGlow)" xml:space="preserve">         ⬡          ⬡          ⬡          ⬡          ⬡</text>
+
+  <!-- status block frame + body (pale lavender, with colored tspans for numbers + hex code) -->
+  <g fill="#B5A0E6">
+    <text x="40" y="244" xml:space="preserve">┌─[ status ]───────────────────────────────────────────┐</text>
+    <text x="40" y="264" xml:space="preserve">│                                                      │</text>
+    <text x="40" y="284" xml:space="preserve">│   skills <tspan fill="#39FF14">39</tspan>  ◉  agents <tspan fill="#39FF14">25</tspan>  ◉  memory <tspan fill="#39FF14">54</tspan>              │</text>
+    <text x="40" y="304" xml:space="preserve">│   hooks   <tspan fill="#39FF14">9</tspan>  ◉  rules  <tspan fill="#39FF14">12</tspan>  ◉  build  <tspan fill="#FF006E">0xFF006E</tspan>        │</text>
+    <text x="40" y="324" xml:space="preserve">│                                                      │</text>
+    <text x="40" y="344" xml:space="preserve">│   <tspan fill="#00F5FF">&gt;</tspan> boot. dispatch. exit through <tspan fill="#FF006E">hex</tspan>.                │</text>
+    <text x="40" y="364" xml:space="preserve">│                                                      │</text>
+    <text x="40" y="384" xml:space="preserve">└──────────────────────────────────────────────────────┘</text>
+  </g>
+
+  <!-- subtle scanline rule at the bottom for synthwave deck vibe -->
+  <line x1="40" y1="420" x2="700" y2="420" stroke="#FF006E" stroke-width="0.5" stroke-opacity="0.4"/>
+  <text x="370" y="438" fill="#5D2A8A" font-size="10" text-anchor="middle" xml:space="preserve">claude code agent system  ·  skills · agents · rules · hooks · memory</text>
+</svg>
