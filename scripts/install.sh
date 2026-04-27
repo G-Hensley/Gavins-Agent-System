@@ -32,6 +32,7 @@ SETTINGS_FILE_NATIVE="$(to_native_path "$SETTINGS_FILE")"
 DRY_RUN=false
 VERIFY=false
 CHECK_PREREQS_ONLY=false
+BACKUP_LOCAL_ONLY=false
 
 # ---------------------------------------------------------------------------
 # Flag parsing
@@ -54,6 +55,12 @@ Options:
                     and the hooks. Exits 0 if all required tools are present,
                     1 if anything required is missing. Optional tools just
                     print a notice.
+  --backup-local    Tarball locally-only files (gitignored agent-memory
+                    contents + any untracked files in the repo) to
+                    ~/.claude/backups/ and exit. Run this before deleting
+                    the repo or cloning fresh on another machine. Combine
+                    with --dry-run to preview the file list. Delegates to
+                    scripts/backup-local.sh.
   --help            Show this help text and exit.
 
 Default (no flags): runs prereq check, then performs the full install.
@@ -72,6 +79,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --check-prereqs)
       CHECK_PREREQS_ONLY=true
+      shift
+      ;;
+    --backup-local)
+      BACKUP_LOCAL_ONLY=true
       shift
       ;;
     --help|-h)
@@ -139,6 +150,22 @@ check_prereqs() {
 if $CHECK_PREREQS_ONLY; then
   check_prereqs
   exit $?
+fi
+
+# ---------------------------------------------------------------------------
+# --backup-local mode (delegate to scripts/backup-local.sh, then exit)
+# ---------------------------------------------------------------------------
+if $BACKUP_LOCAL_ONLY; then
+  BACKUP_SCRIPT="$REPO_DIR/scripts/backup-local.sh"
+  if [ ! -x "$BACKUP_SCRIPT" ]; then
+    echo "ERROR: backup helper not found or not executable: $BACKUP_SCRIPT" >&2
+    exit 1
+  fi
+  if $DRY_RUN; then
+    exec "$BACKUP_SCRIPT" --dry-run
+  else
+    exec "$BACKUP_SCRIPT"
+  fi
 fi
 
 # ---------------------------------------------------------------------------
