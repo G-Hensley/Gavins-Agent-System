@@ -43,11 +43,11 @@ The §6 baseline is the prerequisite gate to every Hexodus version — without m
 <!-- Most recent at the top. When this section exceeds ~30 entries, archive the oldest to docs/TASKS.archive.md. -->
 
 - [x] [TASK-3] Stranger-fork-readiness — superseded by Hexodus v0
-  - closed 2026-04-28 by ROADMAP authoring
+  - closed via #26 (2026-04-28)
   - notes: CLAUDE.md split, agent-memory exclusion, README tone, and APIsec sanitization all become exit criteria of [ROADMAP v0](./ROADMAP.md#v0--plugin-port-existing-system-repackaged). The `improvements/system/stranger-fork-readiness.md` proposal still applies as v0 source material.
 
 - [x] [TASK-7] Refresh Tier 4 eval rubric — superseded by §6 baseline
-  - closed 2026-04-28 by ROADMAP authoring
+  - closed via #26 (2026-04-28)
   - notes: Rubric refresh is now part of the LLM-as-judge grader work in [ROADMAP §6.3](./ROADMAP.md#63-harness-patches-required). The existing `eval-criteria.md` files become input to the grader prompt template — no separate refresh pass needed.
 
 - [x] [TASK-4] Eval freshness — audit pass complete
