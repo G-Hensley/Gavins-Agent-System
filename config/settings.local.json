@@ -1,7 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "mcp__sequential-thinking__sequentialthinking"
+      "mcp__sequential-thinking__sequentialthinking",
+      "Bash(wsl --status)",
+      "Bash(wsl --list --verbose)",
+      "Bash(wsl *)",
+      "WebFetch(domain:hermes-agent.nousresearch.com)",
+      "Skill(schedule)",
+      "PowerShell(Get-ScheduledTask *)",
+      "WebFetch(domain:github.com)"
     ]
   }
 }
