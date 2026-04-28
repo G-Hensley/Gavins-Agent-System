@@ -1,4 +1,4 @@
-# Dependabot configuration for gavins-agent-system.
+# Dependabot configuration for hexodus.
 #
 # This repo intentionally contains NO live application dependencies — every
 # `package.json` and `requirements.txt` under `evals/` is a planted fixture

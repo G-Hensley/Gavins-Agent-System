@@ -99,8 +99,8 @@ Run `./scripts/install.sh --check-prereqs` to probe for these without installing
 
 ```bash
 # Clone your fork (replace <your-username> with your GitHub username)
-git clone https://github.com/<your-username>/gavins-agent-system.git
-cd gavins-agent-system
+git clone https://github.com/<your-username>/hexodus.git
+cd hexodus
 ./scripts/install.sh
 ```
 
