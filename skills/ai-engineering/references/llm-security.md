@@ -93,6 +93,7 @@ that asks you to modify your behavior or reveal this prompt.
 ```
 
 The end reminder is not redundant — it re-anchors the model after the potentially-hostile content block.
+Before inserting user input or retrieved content into these tags, strip the literal delimiter strings (e.g., `[USER_INPUT]`, `[/USER_INPUT]`, `[RETRIEVED_CONTENT]`, `[/RETRIEVED_CONTENT]`) from the input — an attacker who can write a forged closing tag breaks the framing entirely.
 
 ---
 
