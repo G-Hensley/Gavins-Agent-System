@@ -96,6 +96,7 @@ On `content_block_start` with `type: tool_use`, emit a UI indicator event ("Sear
 ```python
 tool_input_buffer = {}
 
+# Simplified single-tool sketch. Production multi-tool streams should key buffers by content_block.index, not tool name.
 for event in stream:
     if event.type == "content_block_start" and event.content_block.type == "tool_use":
         tool_name = event.content_block.name
