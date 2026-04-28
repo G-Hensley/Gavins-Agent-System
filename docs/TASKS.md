@@ -12,7 +12,7 @@ For format, archive policy, and TodoWrite pairing, see the `task-tracking` skill
 
 ### Active phase: §6 Baseline (blocks v0)
 
-The §6 baseline is the prerequisite gate to every Hexodus version — without measured starting numbers, no version's improvement claim is credible. See [ROADMAP.md §6](./ROADMAP.md#6--baseline-measurement-the-step-before-v0).
+The §6 baseline is the prerequisite gate to every Hexodus version — without measured starting numbers, no version's improvement claim is credible. See [ROADMAP.md §6](./ROADMAP.md#6-baseline-measurement-the-step-before-v0).
 
 - [ ] [TASK-8] Audit existing run-eval.sh harness against the 18 scenarios
   - notes: catalog any scenarios that fail for non-agent reasons (stale prompts, broken fixtures). Fix those first — broken scenarios pollute the baseline. Per ROADMAP §6.4 step 1.
