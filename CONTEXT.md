@@ -133,7 +133,6 @@ docs/                # ROADMAP (Hexodus phases), TASKS (tactical), STATUS (eval 
 CLAUDE.md            # Global instructions (symlinked to ~/.claude/CLAUDE.md)
 CONTEXT.md           # This file
 README.md            # Project overview
-claude-code-cowork-research.md  # Research snapshot used for system design (mirrored at Projects/Research/)
 .gitignore           # Excludes secrets, caches, machine-specific state
 ```
 
