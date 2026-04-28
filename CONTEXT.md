@@ -129,7 +129,7 @@ coaching/            # Dated output from the weekly-claude-code-coach Cowork tas
 templates/           # Starter templates for new skills / agents / commands
 config/              # settings.json (template), settings.local.json, hooks.json, plugins/plugins.json (21 tracked)
 scripts/             # install.sh, validate.sh, hooks/ (8 hooks: block-destructive, doc-drift-check, file-size-cap, gh-account-guard, lint-on-save, pr-push-nudge, verify-tests, warn-no-tests)
-docs/                # FAILURE-MODES, HANDOFF-PROTOCOLS, IMPROVEMENTS, PROJECT-IDEAS, REFERENCE-GAPS, SKILL-CHAINS, STATUS, claude-code-cowork-reference
+docs/                # ROADMAP (Hexodus phases), TASKS (tactical), STATUS (eval results), IMPROVEMENTS, FAILURE-MODES, HANDOFF-PROTOCOLS, PROJECT-IDEAS, REFERENCE-GAPS, SKILL-CHAINS
 CLAUDE.md            # Global instructions (symlinked to ~/.claude/CLAUDE.md)
 CONTEXT.md           # This file
 README.md            # Project overview

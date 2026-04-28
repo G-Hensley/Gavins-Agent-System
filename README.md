@@ -67,9 +67,11 @@ scripts/             # Tooling and automation
 templates/           # Reusable project templates
   github-actions/    #   CI and Claude review workflow templates
 docs/                # Project documentation and roadmaps
+  ROADMAP.md         #   Hexodus versioned roadmap — strategic spine (v0 → v4+)
+  TASKS.md           #   Tactical, in-flight task list (pointer to ROADMAP for strategy)
   IMPROVEMENTS.md    #   Consolidated improvement plan
   STATUS.md          #   Current status tracker with eval results
-evals/               # 17-eval test suite across 4 tiers + 6 review challenges
+evals/               # 18-eval test suite across 4 tiers + 6 review challenges
 CLAUDE.md            # Global instructions for Claude Code sessions
 CONTEXT.md           # Ambient context (pipeline, parallelism, architecture)
 README.md            # This file
