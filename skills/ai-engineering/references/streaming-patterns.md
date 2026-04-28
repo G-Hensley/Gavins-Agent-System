@@ -48,14 +48,16 @@ Drop to raw events (lower-level API) when handling tools or stop-reason informat
 
 Server-Sent Events (SSE) is the standard transport for one-way LLM streaming over HTTP. The server pushes newline-delimited `data:` frames; the client reads them as a stream.
 
-**Relevant event types (Anthropic)**
+**App-level SSE event types** (what your server emits to the browser — defined by you, not Anthropic's transport):
 
 | Event | When |
 |---|---|
-| `content_block_delta` / type `text_delta` | Token chunk — append to display |
-| `content_block_start` / type `tool_use` | Tool invocation begins |
-| `content_block_stop` | Block (text or tool) finishes |
-| `message_stop` | Response complete |
+| `text_delta` | Token chunk ready — append to display |
+| `tool_use_start` | Tool invocation begins — show progress indicator |
+| `tool_use_result` | Tool result ready — result returned to model |
+| `message_stop` | Response complete — clean up UI state |
+
+These map from Anthropic's transport events: `content_block_delta`→`text_delta`, `content_block_start(tool_use)`→`tool_use_start`, `content_block_stop(tool)`→`tool_use_result`, `message_stop`→`message_stop`.
 
 **Minimal FastAPI SSE handler**
 ```python
@@ -67,7 +69,7 @@ async def generate():
                                 messages=messages) as stream:
         for text in stream.text_stream:
             yield f"data: {json.dumps({'type': 'text_delta', 'text': text})}\n\n"
-    yield "data: [DONE]\n\n"
+        yield f"data: {json.dumps({'type': 'message_stop'})}\n\n"
 
 @app.post("/chat")
 async def chat(req: ChatRequest):
