@@ -14,12 +14,12 @@ For format, archive policy, and TodoWrite pairing, see the `task-tracking` skill
 
 The §6 baseline is the prerequisite gate to every Hexodus version — without measured starting numbers, no version's improvement claim is credible. See [ROADMAP.md §6](./ROADMAP.md#6-baseline-measurement-the-step-before-v0).
 
-- [ ] [TASK-8] Audit existing run-eval.sh harness against the 18 scenarios
+- [ ] [TASK-8] Audit existing `evals/run-eval.sh` harness against the 18 scenarios
   - notes: catalog any scenarios that fail for non-agent reasons (stale prompts, broken fixtures). Fix those first — broken scenarios pollute the baseline. Per ROADMAP §6.4 step 1.
   - estimate: 0.5–1 day
 
-- [ ] [TASK-9] Patch run-eval.sh with token + trace + judge metrics
-  - notes: ~250 LOC under `evals/lib/`. Three modules: token+trace extractor (~100 LOC), LLM-as-judge grader (~150 LOC + prompt template), aggregator. Hook into `run-eval.sh` after each scenario completes. Per ROADMAP §6.3.
+- [ ] [TASK-9] Patch `evals/run-eval.sh` with token + trace + judge metrics
+  - notes: ~250 LOC under `evals/lib/`. Three modules: token+trace extractor (~100 LOC), LLM-as-judge grader (~150 LOC + prompt template), aggregator. Hook into `evals/run-eval.sh` after each scenario completes. Per ROADMAP §6.3.
   - estimate: 1–2 days
   - blocked by: TASK-8
 
