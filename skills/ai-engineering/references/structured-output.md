@@ -124,6 +124,6 @@ output = generator(f"Classify sentiment. Review: {review_text}")
 | `decision` before `reasoning` in schema | Model commits before reasoning; quality degrades | Put `reasoning` first in every schema that requires thought |
 | Free-text where enums fit | Model generates creative but invalid values | Enumerate with `Literal` or `Enum` types |
 | Deeply nested schemas | Models lose track of context inside nesting | Flatten to one level where possible |
-| Missing `additionalProperties: false` | Extra fields sneak through; downstream code breaks on unexpected keys | Set `additionalProperties: false` in JSON Schema; Pydantic enforces by default |
+| Missing `additionalProperties: false` | Extra fields sneak through; downstream code breaks on unexpected keys | Set `additionalProperties: false` in JSON Schema; if using Pydantic, explicitly forbid extra fields (`model_config = ConfigDict(extra="forbid")` in v2) |
 | Skipping evals after switching to Gen 3/4 | Structured output ≠ correct output; schema conformance masks semantic errors | Evals are still required — schema enforcement only removes parse failures |
 | Gen 1 in production | 5–20% parse failure rate; silent data loss | Upgrade to Gen 3 — often a two-line change |
