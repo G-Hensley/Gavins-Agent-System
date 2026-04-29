@@ -36,7 +36,7 @@ Default targets for a 128K-context model. Adjust proportionally for smaller wind
 - Pure recency (last N) is the most common default — and the most dangerous. A message from 20 turns ago that set a hard constraint is invisible under a sliding window.
 
 ```python
-def build_history(messages: list[dict], budget: int, strategy: str) -> list[dict]:
+def build_history(messages: list[dict], budget: int, strategy: str, current_query: str) -> list[dict]:
     if strategy == "sliding":
         return messages[-MAX_TURNS:]
     if strategy == "summarize":

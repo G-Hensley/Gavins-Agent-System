@@ -137,7 +137,7 @@ TOOL_SELECTION_EVALS = [
     {
         "input": "Cancel order ORD-456 because the customer changed their mind",
         "expected_tool": "cancel_order",
-        "expected_params": {"order_id": "ORD-456"},
+        "expected_params": {"order_id": "ORD-456", "reason": "customer changed their mind"},
     },
     {
         "input": "Show me all pending orders for customer C-789",

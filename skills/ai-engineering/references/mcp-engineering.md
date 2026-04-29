@@ -1,6 +1,6 @@
 # MCP Engineering
 
-Model Context Protocol (MCP) is a JSON-RPC 2.0 standard for connecting LLM applications to external tools and data. It is the "USB-C for AI" — one protocol, many integrations. Donated to the Agentic AI Foundation (Linux Foundation) in December 2025; co-governed by Anthropic, OpenAI, Block, Google, Microsoft, and AWS. For server-authoring concerns, see the `mcp-builder` skill. For tool-design principles (naming, descriptions, return shapes), see `./tool-design.md`.
+Model Context Protocol (MCP) is a JSON-RPC 2.0 standard for connecting LLM applications to external tools and data. It is the "USB-C for AI" — one protocol, many integrations. Donated to the Agentic AI Foundation (Linux Foundation) in December 2025; co-governed by Anthropic, OpenAI, Block, Google, Microsoft, and AWS. Server-authoring guidance is not yet covered by a dedicated skill in this repo. For tool-design principles (naming, descriptions, return shapes), see `./tool-design.md`.
 
 ---
 
