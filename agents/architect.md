@@ -4,6 +4,7 @@ description: Software architect. Use when designing system architecture, definin
 tools: Read, Write, Edit, Bash, Grep, Glob
 model: opus
 skills:
+  - ai-engineering
   - architecture
   - security
 memory: user

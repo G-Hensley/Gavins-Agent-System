@@ -4,6 +4,7 @@ description: Automation engineering specialist. Use when building CLI tools, aut
 tools: Read, Write, Edit, Bash, Grep, Glob
 model: sonnet
 skills:
+  - ai-engineering
   - automation-engineering
   - test-driven-development
 memory: user

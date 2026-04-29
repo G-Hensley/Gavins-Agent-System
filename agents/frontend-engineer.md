@@ -4,6 +4,7 @@ description: Frontend engineering specialist. Use when implementing React/Next.j
 tools: Read, Write, Edit, Bash, Grep, Glob
 model: opus
 skills:
+  - ai-engineering
   - frontend-engineering
   - frontend-design
   - test-driven-development
