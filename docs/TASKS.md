@@ -42,6 +42,10 @@ The §6 baseline is the prerequisite gate to every Hexodus version — without m
 
 <!-- Most recent at the top. When this section exceeds ~30 entries, archive the oldest to docs/TASKS.archive.md. -->
 
+- [x] [TASK-11] Promote AI Engineering improvements bundle (13 items)
+  - closed via #28 (2026-04-29)
+  - notes: 10 new `skills/ai-engineering/references/` (agentic-design-patterns, context-management, tool-design, structured-output, mcp-engineering, rag-engineering, streaming-patterns, cost-optimization-and-routing, llm-security, evaluation-and-observability) + prompt-engineering basics/advanced split + `agents/llm-evaluator.md` (Sonnet) + `rules/llm-evals.md`. SKILL.md surfaces all 11 refs; 8 cross-cutting agents now load `ai-engineering`. Two cross-bundle TODOs to `websocket-security.md` resolve when Security bundle ships. Per [ROADMAP v0](./ROADMAP.md#v0--plugin-port-existing-system-repackaged) bundle plan; first of 4 bundles before §6 baseline.
+
 - [x] [TASK-3] Stranger-fork-readiness — superseded by Hexodus v0
   - closed via #26 (2026-04-28)
   - notes: CLAUDE.md split, agent-memory exclusion, README tone, and APIsec sanitization all become exit criteria of [ROADMAP v0](./ROADMAP.md#v0--plugin-port-existing-system-repackaged). The `improvements/system/stranger-fork-readiness.md` proposal still applies as v0 source material.
