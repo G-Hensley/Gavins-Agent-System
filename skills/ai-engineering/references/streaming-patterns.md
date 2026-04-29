@@ -163,7 +163,7 @@ source.onmessage = (e) => {
 source.onerror = () => source.close();
 ```
 
-`EventSource` only supports GET requests. If you need to send a POST body (e.g., a chat message), use the `fetch` ReadableStream approach below.
+`EventSource` only supports GET requests. To send a POST body (e.g., a chat message), use the `fetch` ReadableStream below — the FastAPI handler above is GET-only, so the POST path needs a sibling `@app.post` route applying the same `StreamingResponse` pattern with the body parsed from a Pydantic model.
 
 **fetch ReadableStream (more control — supports POST, custom headers)**
 ```typescript
