@@ -14,8 +14,6 @@ A 4-second response that streams feels fast. A 4-second response that appears al
 
 ## Provider APIs
 
-Both major providers follow the same shape: open a stream, iterate over events, close.
-
 **Anthropic**
 ```python
 with client.messages.stream(
@@ -40,7 +38,7 @@ for chunk in stream:
     print(delta, end="", flush=True)
 ```
 
-Drop to raw events (lower-level API) when handling tools or stop-reason information; use the text iterator above for simple prose.
+Drop to raw events for tool/stop-reason handling; use the text iterator above for simple prose.
 
 ---
 
@@ -59,15 +57,19 @@ Server-Sent Events (SSE) is the standard transport for one-way LLM streaming ove
 
 These map from Anthropic's transport events: `content_block_delta`→`text_delta`, `content_block_start(tool_use)`→`tool_use_start`, `content_block_stop(tool)`→`tool_use_result`, `message_stop`→`message_stop`.
 
-**Minimal FastAPI SSE handler**
+**Minimal FastAPI SSE handler** — uses `AsyncAnthropic` so the stream runs on the event loop:
 ```python
+import json
+from anthropic import AsyncAnthropic
 from fastapi.responses import StreamingResponse
 
+client = AsyncAnthropic()
+
 async def generate():
-    with client.messages.stream(model="claude-sonnet-4-6",
-                                max_tokens=1024,
-                                messages=messages) as stream:
-        for text in stream.text_stream:
+    async with client.messages.stream(model="claude-sonnet-4-6",
+                                      max_tokens=1024,
+                                      messages=messages) as stream:
+        async for text in stream.text_stream:
             yield f"data: {json.dumps({'type': 'text_delta', 'text': text})}\n\n"
         yield f"data: {json.dumps({'type': 'message_stop'})}\n\n"
 
@@ -80,7 +82,7 @@ async def chat(message: str):
 
 ## WebSocket Alternative
 
-Use WebSocket when the connection is genuinely bidirectional — client sends multiple messages in one session, or you need server-push outside of request/response (live collaboration, voice pipelines with interruptions). For standard chat (one request, one streamed response), SSE is simpler and sufficient; WebSocket adds connection lifecycle overhead for no benefit.
+Use WebSocket only when genuinely bidirectional (live collaboration, voice with interruptions). For standard chat, SSE is simpler — WebSocket adds connection-lifecycle overhead for no benefit.
 
 <!-- TODO(security-bundle): link to skills/security/references/websocket-security.md when Security bundle ships -->
 
@@ -88,9 +90,7 @@ Use WebSocket when the connection is genuinely bidirectional — client sends mu
 
 ## Tool Use Mid-Stream
 
-When a tool call occurs mid-stream, the model pauses token generation, requests tool execution, and resumes after the result is returned. Without explicit UI handling, the user sees the stream freeze silently.
-
-On `content_block_start` with `type: tool_use`, emit `tool_use_start` ("Searching...", "Running..."), execute the tool, feed the result back into a follow-up stream call as a `tool_result` content block, and emit `tool_use_result` to the client before resuming.
+On `content_block_start` with `type: tool_use`, emit `tool_use_start` ("Searching..."), execute the tool, feed the result back into a follow-up stream call as a `tool_result` content block, then emit `tool_use_result` to the client before resuming. Without explicit handling the UI freezes silently.
 
 **Server-side state handling** — key buffers by `content_block.index` so deltas/stops match the right block (handles concurrent tool calls):
 ```python
@@ -163,9 +163,9 @@ source.onmessage = (e) => {
 source.onerror = () => source.close();
 ```
 
-`EventSource` only supports GET requests. To send a POST body (e.g., a chat message), use the `fetch` ReadableStream below — the FastAPI handler above is GET-only, so the POST path needs a sibling `@app.post` route applying the same `StreamingResponse` pattern with the body parsed from a Pydantic model.
+`EventSource` is GET-only. For POST bodies use the `fetch` ReadableStream below — that path needs a sibling `@app.post` route applying the same `StreamingResponse` pattern.
 
-**fetch ReadableStream (more control — supports POST, custom headers)**
+**fetch ReadableStream (more control — supports POST, custom headers)** — production code needs a carry-over buffer; SSE frames can split across `read()` chunks at any byte boundary, so accumulate until `\n\n` before parsing:
 ```typescript
 const res = await fetch("/chat", {
   method: "POST",
@@ -174,15 +174,16 @@ const res = await fetch("/chat", {
 });
 const reader = res.body!.getReader();
 const decoder = new TextDecoder();
+let buf = "";
 while (true) {
   const { done, value } = await reader.read();
   if (done) break;
-  for (const line of decoder.decode(value).split("\n")) {
-    if (!line.startsWith("data: ")) continue;
-    const raw = line.slice(6);
-    if (raw === "[DONE]") break;
-    const event = JSON.parse(raw);
-    handleEvent(event);
+  buf += decoder.decode(value, { stream: true });
+  let i;
+  while ((i = buf.indexOf("\n\n")) !== -1) {
+    const frame = buf.slice(0, i); buf = buf.slice(i + 2);
+    const data = frame.split("\n").filter(l => l.startsWith("data: ")).map(l => l.slice(6)).join("\n");
+    if (data) handleEvent(JSON.parse(data));
   }
 }
 ```

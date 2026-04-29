@@ -76,7 +76,7 @@ Add an eval step to every PR pipeline that touches:
 - Tool definitions or function-calling schemas
 - AI pipeline orchestration code
 
-**Block merge** when the runner exits non-zero (pass rate below threshold). Store `results/YYYY-MM-DD-run.json` as a build artifact for trend analysis.
+**Block merge** when the runner exits non-zero (`1` = pass rate below threshold, `2` = runner error). Store `results/YYYY-MM-DD-run.json` as a build artifact for trend analysis.
 
 Do not add the eval step only to main merges — eval failures caught post-merge are already regressions.
 
