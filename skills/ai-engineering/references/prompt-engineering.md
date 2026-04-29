@@ -50,3 +50,7 @@ Output: {"category": "docs", "priority": "low", "effort": "small"}
 - Too many instructions at once → prioritize and sequence
 - No examples when format matters → add 2-3 few-shot examples
 - Entire codebase as context → curate relevant files only
+
+---
+
+For advanced techniques (Chain of Thought, decomposition, context positioning, negative examples, temperature selection), see [prompt-engineering-advanced.md](./prompt-engineering-advanced.md).

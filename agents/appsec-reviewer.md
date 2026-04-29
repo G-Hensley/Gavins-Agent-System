@@ -4,6 +4,7 @@ description: Application security specialist. Use proactively when reviewing aut
 tools: Read, Grep, Glob, Bash
 model: sonnet
 skills:
+  - ai-engineering
   - security
 memory: user
 ---

@@ -4,6 +4,7 @@ description: Backend engineering specialist. Use when implementing API endpoints
 tools: Read, Write, Edit, Bash, Grep, Glob
 model: opus
 skills:
+  - ai-engineering
   - backend-engineering
   - test-driven-development
   - security

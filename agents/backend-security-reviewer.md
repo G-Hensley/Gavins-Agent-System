@@ -4,6 +4,7 @@ description: Backend security specialist. Use proactively when reviewing or writ
 tools: Read, Grep, Glob, Bash
 model: sonnet
 skills:
+  - ai-engineering
   - security
   - backend-engineering
 memory: user

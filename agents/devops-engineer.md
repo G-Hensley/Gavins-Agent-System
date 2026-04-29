@@ -4,6 +4,7 @@ description: DevOps/DevSecOps engineering specialist. Use when building CI/CD pi
 tools: Read, Write, Edit, Bash, Grep, Glob
 model: sonnet
 skills:
+  - ai-engineering
   - devops
   - security
 memory: user

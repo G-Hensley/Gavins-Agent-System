@@ -4,6 +4,7 @@ description: QA engineering specialist. Use when building test suites, writing E
 tools: Read, Write, Edit, Bash, Grep, Glob
 model: sonnet
 skills:
+  - ai-engineering
   - qa-engineering
   - test-driven-development
 memory: user
