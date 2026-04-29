@@ -38,8 +38,6 @@ for chunk in stream:
     print(delta, end="", flush=True)
 ```
 
-Drop to raw events for tool/stop-reason handling; use the text iterator above for simple prose.
-
 ---
 
 ## SSE for Web
