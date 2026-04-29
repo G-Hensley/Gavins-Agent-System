@@ -72,7 +72,16 @@ For chain-of-thought integration and extended reasoning patterns, see `./prompt-
 
 ## Worked Example: Sentiment Classification
 
-Same task — classify a review — implemented at each generation.
+Same task — classify a review — implemented at each generation. All four examples use this Pydantic model:
+
+```python
+from pydantic import BaseModel
+from typing import Literal
+
+class SentimentResult(BaseModel):
+    sentiment: Literal["positive", "negative", "neutral"]
+    confidence: float
+```
 
 **Gen 1 — prompt-only**
 ```python
