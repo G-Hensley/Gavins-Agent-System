@@ -102,8 +102,7 @@ Each tool definition consumes 200–500 tokens before a single user message is p
 |---|---|
 | 1–5 | Load all; no categorization needed |
 | 6–10 | Comfortable range; evaluate whether all are needed per task |
-| 11–20 | Review for tool sprawl; consider task-scoped subsets |
-| 20+ | Requires categorization or a dispatcher agent |
+| 11+ | Requires categorization or a dispatcher agent |
 
 **Dispatcher pattern** — route by category rather than exposing all tools to one agent:
 
