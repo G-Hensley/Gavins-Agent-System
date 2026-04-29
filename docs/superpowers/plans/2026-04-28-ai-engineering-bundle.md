@@ -6,7 +6,7 @@
 
 **Architecture:** Add 9 new reference files under `skills/ai-engineering/references/`, split + expand `prompt-engineering.md` into basics + advanced, create `agents/llm-evaluator.md`, add `rules/llm-evals.md`, update `skills/ai-engineering/SKILL.md` to surface the refs, delete the 13 source improvement files in the same commits that promote them.
 
-**Tech Stack:** Markdown only. No code, no tests in the traditional sense — verification is structural (file exists, line count ≤ 200, internal links resolve, cross-references match).
+**Tech Stack:** Markdown only. No code, no tests in the traditional sense — verification is structural for the promoted bundle artifacts (skill refs, agent, rule): file exists, line count ≤ 200, internal links resolve, cross-references match. The line-count constraint does not apply to plan documents themselves.
 
 **Branch:** `feat/ai-engineering-bundle`. One PR at the end.
 
