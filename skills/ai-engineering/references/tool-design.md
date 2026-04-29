@@ -119,7 +119,11 @@ def dispatcher(intent: str, context: dict) -> dict:
     )
     tools = CATEGORIES.get(category, [])
     if not tools:
-        return {"status": "error", "message": f"No tools found for category: {category}"}
+        return {
+            "status": "error",
+            "code": "NO_TOOLS_FOR_CATEGORY",
+            "message": f"No tools found for category: {category}",
+        }
     agent = build_agent(tools=tools, context=context)
     return agent.run(intent)
 ```
