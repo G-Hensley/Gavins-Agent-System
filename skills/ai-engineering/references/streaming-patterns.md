@@ -71,8 +71,8 @@ async def generate():
             yield f"data: {json.dumps({'type': 'text_delta', 'text': text})}\n\n"
         yield f"data: {json.dumps({'type': 'message_stop'})}\n\n"
 
-@app.post("/chat")
-async def chat(req: ChatRequest):
+@app.get("/chat")
+async def chat(message: str):
     return StreamingResponse(generate(), media_type="text/event-stream")
 ```
 
@@ -92,22 +92,23 @@ When a tool call occurs mid-stream, the model pauses token generation, requests 
 
 On `content_block_start` with `type: tool_use`, emit a UI indicator event ("Searching...", "Running..."), execute the tool, inject the result, then emit `tool_done` to clear the indicator before resuming the stream.
 
-**Server-side state handling**
+**Server-side state handling** — key buffers by `content_block.index` so deltas/stops match the right block (handles concurrent tool calls correctly):
 ```python
-tool_input_buffer = {}
+tool_blocks = {}  # index -> {"name": ..., "input": ""}
 
-# Simplified single-tool sketch. Production multi-tool streams should key buffers by content_block.index, not tool name.
 for event in stream:
     if event.type == "content_block_start" and event.content_block.type == "tool_use":
-        tool_name = event.content_block.name
-        yield sse({"type": "tool_indicator", "text": indicator_for(tool_name)})
+        tool_blocks[event.content_block.index] = {
+            "name": event.content_block.name, "input": ""
+        }
+        yield sse({"type": "tool_indicator", "text": indicator_for(event.content_block.name)})
     elif event.type == "content_block_delta" and event.delta.type == "input_json_delta":
-        tool_input_buffer.setdefault(tool_name, "")
-        tool_input_buffer[tool_name] += event.delta.partial_json
-    elif event.type == "content_block_stop" and tool_name:
-        result = execute_tool(tool_name, json.loads(tool_input_buffer[tool_name]))
+        if event.index in tool_blocks:
+            tool_blocks[event.index]["input"] += event.delta.partial_json
+    elif event.type == "content_block_stop" and event.index in tool_blocks:
+        block = tool_blocks.pop(event.index)
+        result = execute_tool(block["name"], json.loads(block["input"]))
         yield sse({"type": "tool_done"})
-        # continue with new stream that includes tool_result
 ```
 
 Common indicator text: "Searching...", "Running...", "Looking that up...", "Fetching records...".
