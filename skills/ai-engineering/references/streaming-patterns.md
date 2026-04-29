@@ -90,9 +90,9 @@ Use WebSocket when the connection is genuinely bidirectional — client sends mu
 
 When a tool call occurs mid-stream, the model pauses token generation, requests tool execution, and resumes after the result is returned. Without explicit UI handling, the user sees the stream freeze silently.
 
-On `content_block_start` with `type: tool_use`, emit a UI indicator event ("Searching...", "Running..."), execute the tool, inject the result, then emit `tool_done` to clear the indicator before resuming the stream.
+On `content_block_start` with `type: tool_use`, emit `tool_use_start` ("Searching...", "Running..."), execute the tool, feed the result back into a follow-up stream call as a `tool_result` content block, and emit `tool_use_result` to the client before resuming.
 
-**Server-side state handling** — key buffers by `content_block.index` so deltas/stops match the right block (handles concurrent tool calls correctly):
+**Server-side state handling** — key buffers by `content_block.index` so deltas/stops match the right block (handles concurrent tool calls):
 ```python
 tool_blocks = {}  # index -> {"name": ..., "input": ""}
 
@@ -101,17 +101,16 @@ for event in stream:
         tool_blocks[event.content_block.index] = {
             "name": event.content_block.name, "input": ""
         }
-        yield sse({"type": "tool_indicator", "text": indicator_for(event.content_block.name)})
+        yield sse({"type": "tool_use_start", "text": indicator_for(event.content_block.name)})
     elif event.type == "content_block_delta" and event.delta.type == "input_json_delta":
         if event.index in tool_blocks:
             tool_blocks[event.index]["input"] += event.delta.partial_json
     elif event.type == "content_block_stop" and event.index in tool_blocks:
         block = tool_blocks.pop(event.index)
         result = execute_tool(block["name"], json.loads(block["input"]))
-        yield sse({"type": "tool_done"})
+        yield sse({"type": "tool_use_result", "data": result})
+        # Then submit result back as tool_result block in a follow-up stream call.
 ```
-
-Common indicator text: "Searching...", "Running...", "Looking that up...", "Fetching records...".
 
 For indirect prompt injection risks in tool-use pipelines, see `./llm-security.md`.
 
@@ -157,9 +156,9 @@ const source = new EventSource("/chat");
 source.onmessage = (e) => {
   const event = JSON.parse(e.data);
   if (event.type === "text_delta") appendText(event.text);
-  if (event.type === "tool_indicator") showIndicator(event.text);
+  if (event.type === "tool_use_start") showIndicator(event.text);
   if (event.type === "structured_result") handleResult(event.data);
-  if (e.data === "[DONE]") source.close();
+  if (event.type === "message_stop") source.close();
 };
 source.onerror = () => source.close();
 ```
