@@ -1,7 +1,7 @@
 ---
 name: ai-engineering
 description: Build AI-powered applications — agents, chatbots, automation, pipelines, RAG systems, and LLM integrations across any provider (Claude, OpenAI, Hugging Face, local models). Use when building agentic systems, chatbots, AI features, prompt engineering, RAG, fine-tuning workflows, or integrating any LLM. Also use when the user says "build an agent", "chatbot", "AI automation", "LLM", "RAG", "embeddings", "prompt engineering", "AI pipeline", or works with any AI/ML API.
-last_verified: 2026-04-04
+last_verified: 2026-04-28
 ---
 
 # AI Engineering
@@ -43,6 +43,8 @@ Apply the `architecture` skill with these AI-specific concerns:
 - **Model selection** — match capability to task (cheap for simple, capable for complex)
 - **Guardrails** — input validation, output filtering, content safety
 - **Cost optimization** — caching, model routing, context pruning
+- See `references/agentic-design-patterns.md` for pattern selection ladder (ReAct, Reflection, Planning, HITL, Evaluator-Optimizer).
+- See `references/context-management.md` for token-budget defaults and conversation-history strategies.
 
 ### 4. Implement and Test
 Follow `writing-plans` → `subagent-driven-development` for implementation. AI-specific testing:
@@ -51,6 +53,7 @@ Follow `writing-plans` → `subagent-driven-development` for implementation. AI-
 - Test error recovery (API failures, rate limits, malformed responses)
 - Test across providers if multi-provider (responses differ in format/quality)
 - Measure token usage, latency, and cost per request
+- See `references/evaluation-and-observability.md` for eval suite design (offline + online eval, tracing, drift detection).
 
 ## What NOT to Do
 
@@ -67,5 +70,16 @@ Follow `writing-plans` → `subagent-driven-development` for implementation. AI-
 
 - `references/sdk-patterns.md` — Provider integration patterns (Claude, OpenAI, Hugging Face), agent frameworks, tool definitions, multi-turn patterns. Read when building any AI integration.
 - `references/project-structure.md` — AI project layout (agents, chains, prompts, tools, embeddings, retrieval, tests). Read when scaffolding a new AI/LLM project.
-- `references/prompt-engineering.md` — Prompt design, structured output, few-shot patterns, system prompts, context management, RAG prompting. Read when designing prompts for any provider.
+- `references/prompt-engineering.md` — Prompt design basics, system prompts, few-shot, structured output overview. Read when designing prompts.
+- `references/prompt-engineering-advanced.md` — Chain of Thought, decomposition, context positioning, negative examples, temperature selection. Read after `prompt-engineering.md` for production prompts.
+- `references/agentic-design-patterns.md` — ReAct, Reflection, Planning, Human-in-the-Loop, Evaluator-Optimizer; pattern selection ladder. Read when designing any agent loop.
+- `references/context-management.md` — Token budget allocation, conversation-history strategies, lost-in-the-middle. Read when designing memory or context-heavy systems.
+- `references/tool-design.md` — Tool naming, descriptions, parameter design, dispatcher pattern. Read when authoring tools for any agent.
+- `references/structured-output.md` — Four generations of structured output, schema design rules, reasoning-before-decision ordering. Read when designing structured output.
+- `references/mcp-engineering.md` — MCP architecture, transport, primitives, security model. Read when consuming or integrating MCP servers.
+- `references/rag-engineering.md` — Chunking, hybrid retrieval, reranking, RAG eval split. Read when building RAG.
+- `references/streaming-patterns.md` — TTFT framing, SSE, tool-use mid-stream, structured output streaming. Read when building user-facing AI features.
+- `references/cost-optimization-and-routing.md` — Routing strategies (cascade), caching, cost tracking, budget ceilings. Read when running LLM features in production.
+- `references/llm-security.md` — Prompt injection, OWASP LLM Top 10, defense layers, privilege separation. Read when reviewing or building LLM features.
+- `references/evaluation-and-observability.md` — Offline + online eval, tracing, drift detection, eval suite anatomy. Read when shipping any LLM feature to production.
 - `ai-engineer` subagent (in `~/.claude/agents/`) — Subagent for reviewing AI application architecture, prompt quality, and provider integration.
